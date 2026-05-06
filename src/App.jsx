@@ -8,21 +8,23 @@ const CATEGORIES = [
   { id: 'stickers', label: 'Stickers' },
   { id: 'tarjetas', label: 'Tarjetas' },
   { id: 'kits', label: 'Kits Creativos' },
+  { id: 'vasos', label: 'Vasos' },
 ];
 
 const PRODUCTS = [
   { id: 1, name: 'Agenda Constelación 2026', cat: 'agendas', catLbl: 'Agenda', price: 28, oldPrice: 34, color: 'var(--coral)', mock: 'agenda', mockText: 'Cons-\ntelación', mockYr: '2026', badge: 'bestseller', desc: 'Agenda semanal en tapa dura con estampado de estrellas, cinta marcadora y pegatinas mensuales.', feats: ['Tapa dura tela', '160 páginas crema', 'Cinta de tela rosa', '+ stickers de regalo'], colors: ['#F08387', '#9DBDE4', '#C7D634'] },
   { id: 2, name: 'Libreta Confetti A5', cat: 'libretas', catLbl: 'Libreta', price: 12, color: 'var(--yellow)', mock: 'agenda', mockText: 'Confetti\nA5', mockYr: 'punteado', badge: 'new', desc: 'Libreta A5 con interior punteado, ideal para bullet journal. Tapa con patrón Orenda.', feats: ['Formato A5', 'Hojas punteadas 90gsm', 'Encuadernación cosida'], colors: ['#F2E32A', '#E91E63', '#4D6BB1'] },
-  { id: 3, name: 'Pack Stickers Buenos Días', cat: 'stickers', catLbl: 'Stickers', price: 6, color: 'var(--pink)', mock: 'sticker', mockText: '24 stickers', desc: 'Lámina con 24 stickers troquelados de frases positivas y dibujos para alegrar tu día.', feats: ['24 piezas troqueladas', 'Vinilo resistente al agua', 'Diseño exclusivo Orenda'], colors: ['#E91E63', '#F36A1F', '#9DBDE4'] },
+  { id: 3, name: 'Pack Stickers Buenos Días', cat: 'stickers', catLbl: 'Stickers', price: 6, color: 'var(--pink)', image: '/assets/products/stickers.jpg', mock: 'sticker', mockText: '24 stickers', desc: 'Lámina con 24 stickers troquelados de frases positivas y dibujos para alegrar tu día.', feats: ['24 piezas troqueladas', 'Vinilo resistente al agua', 'Diseño exclusivo Orenda'], colors: ['#E91E63', '#F36A1F', '#9DBDE4'] },
   { id: 4, name: 'Tarjeta "Te quiero un montón"', cat: 'tarjetas', catLbl: 'Tarjeta', price: 4, color: 'var(--lime)', mock: 'card', mockText: 'Te quiero un montón', desc: 'Tarjeta doblada con sobre artesanal. Frase ilustrada a mano. Perfecta para regalar.', feats: ['Tarjeta doblada 12×17 cm', 'Papel reciclado 350gsm', 'Sobre crema incluido'], colors: ['#C7D634', '#F08387', '#F2E32A'] },
   { id: 5, name: 'Planner Semanal Crema', cat: 'agendas', catLbl: 'Planner', price: 14, color: 'var(--sky)', mock: 'planner', mockText: 'Semana', desc: 'Bloc planner sin fechas con 52 hojas tear-off. Organiza tu semana con espacio para hábitos y prioridades.', feats: ['Bloc 52 hojas', 'Sin fechar (úsalo cuando quieras)', 'Tamaño A4'], colors: ['#9DBDE4', '#FFF8E1', '#F08387'] },
   { id: 6, name: 'Kit Lettering Principiante', cat: 'kits', catLbl: 'Kit creativo', price: 32, oldPrice: 38, color: 'var(--orange)', mock: 'agenda', mockText: 'Kit\nLettering', mockYr: 'workshop', badge: 'limited', desc: 'Todo lo que necesitas para empezar en el lettering: cuaderno guía, 4 rotuladores y plantillas.', feats: ['Cuaderno guía 64 pp.', '4 rotuladores Tombow', 'Plantillas de práctica'], colors: ['#F36A1F', '#E91E63', '#C7D634'] },
   { id: 7, name: 'Libreta Mini Bolsillo', cat: 'libretas', catLbl: 'Libreta', price: 7, color: 'var(--indigo)', mock: 'agenda', mockText: 'Mini\npocket', mockYr: '40 hojas', desc: 'Libretita de bolsillo para apuntar ideas al vuelo. Pack de 3 colores surtidos.', feats: ['Pack de 3 unidades', 'Tamaño 9×14 cm', 'Hojas lisas color crema'], colors: ['#4D6BB1', '#F36A1F', '#C7D634'] },
   { id: 8, name: 'Postales Ilustradas (set 8)', cat: 'tarjetas', catLbl: 'Postales', price: 9, color: 'var(--coral)', mock: 'card', mockText: 'Hola, hola', desc: 'Set de 8 postales ilustradas con frases en español. Cada una en un color diferente.', feats: ['8 postales 10×15 cm', 'Papel mate 300gsm', 'Para enviar o decorar'], colors: ['#F08387', '#F2E32A', '#9DBDE4'] },
-  { id: 9, name: 'Stickers Frases Pequeñas', cat: 'stickers', catLbl: 'Stickers', price: 5, color: 'var(--lime)', mock: 'sticker', mockText: '32 mini stickers', badge: 'new', desc: 'Mini stickers tipo washi con frases motivadoras y elementos para decorar tu agenda.', feats: ['32 piezas mini', 'Acabado mate suave', 'Ideal para planners'], colors: ['#C7D634', '#F2E32A', '#E91E63'] },
+  { id: 9, name: 'Pack de Pines Orenda', cat: 'stickers', catLbl: 'Pines', price: 5, color: 'var(--lime)', image: '/assets/products/pines.jpg', mock: 'sticker', mockText: 'pines', badge: 'new', desc: 'Pines metálicos con ilustraciones Orenda. Para personalizar mochilas, chaquetas o tableros.', feats: ['Pack surtido', 'Cierre de mariposa', 'Diseño exclusivo Orenda'], colors: ['#C7D634', '#F2E32A', '#E91E63'] },
   { id: 10, name: 'Bullet Journal Estrellas', cat: 'libretas', catLbl: 'Bullet Journal', price: 22, color: 'var(--pink)', mock: 'agenda', mockText: 'Bullet\nJournal', mockYr: 'estrellas', badge: 'bestseller', desc: 'Bullet journal premium con páginas punteadas, índice numerado y dos cintas marcadoras.', feats: ['208 páginas punteadas', 'Cubierta con estrellas', '2 cintas + bolsillo'], colors: ['#E91E63', '#4D6BB1', '#F36A1F'] },
   { id: 11, name: 'Kit "Empieza el Año"', cat: 'kits', catLbl: 'Kit', price: 45, color: 'var(--yellow)', mock: 'planner', mockText: 'Año Nuevo', desc: 'Agenda + libreta + pack de stickers + tarjeta de propósitos. Todo en una caja de regalo.', feats: ['Caja-regalo Orenda', '4 productos seleccionados', 'Ahorra 12€ vs por separado'], colors: ['#F2E32A', '#E91E63', '#9DBDE4'] },
   { id: 12, name: 'Tarjetas Cumpleaños (3)', cat: 'tarjetas', catLbl: 'Tarjetas', price: 8, color: 'var(--orange)', mock: 'card', mockText: 'Feliz cumple', desc: 'Pack de 3 tarjetas de cumpleaños diferentes con sobres a juego. Frases divertidas.', feats: ['3 diseños distintos', 'Sobres incluidos', 'Hechas en España'], colors: ['#F36A1F', '#F08387', '#C7D634'] },
+  { id: 13, name: 'Vaso de Cristal con Tapa de Bambú', cat: 'vasos', catLbl: 'Vaso', price: 18, color: 'var(--sky)', image: '/assets/products/vaso.jpg', mock: 'planner', mockText: 'Vaso', badge: 'bestseller', desc: 'Vaso de cristal con tapa de bambú natural. Incluye tarjeta de cuidados Orenda. Lavar la tapa a mano y evitar choques de temperatura.', feats: ['Cristal + bambú natural', 'Tarjeta de cuidados incluida', 'Lavar tapa a mano'], colors: ['#9DBDE4', '#F5F2EC', '#1B1B1B'] },
 ];
 
 const TESTIMONIALS = [
@@ -192,7 +194,9 @@ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView }) => (
       >
         <Icon name="heart" size={16} />
       </button>
-      <ProductMock type={p.mock} text={p.mockText} year={p.mockYr} />
+      {p.image
+        ? <img src={p.image} alt={p.name} className="card-photo" loading="lazy" />
+        : <ProductMock type={p.mock} text={p.mockText} year={p.mockYr} />}
     </div>
     <div className="card-body">
       <div className="card-cat">{p.catLbl}</div>
@@ -460,7 +464,9 @@ const QuickView = ({ product, onClose, onAdd }) => {
     <div className={'modal-ov open'} onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-img" style={{ background: product.color }}>
-          <ProductMock type={product.mock} text={product.mockText} year={product.mockYr} />
+          {product.image
+            ? <img src={product.image} alt={product.name} className="modal-photo" />
+            : <ProductMock type={product.mock} text={product.mockText} year={product.mockYr} />}
         </div>
         <div className="modal-info">
           <button className="modal-close" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
