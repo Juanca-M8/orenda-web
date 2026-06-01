@@ -1,5 +1,9 @@
 import { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 
+/* ============== ORENDA — WHATSAPP ============== */
+const ORENDA_WA = '526221513198';
+const waLink = (text) => `https://wa.me/${ORENDA_WA}?text=${text}`;
+
 /* ============== DATA ============== */
 const CATEGORIES = [
   { id: 'todos', label: 'Todos' },
@@ -44,6 +48,12 @@ const TESTIMONIALS = [
   { name: 'Carla S.', role: 'Bullet journal addict', text: 'Llevo tres bullets de Orenda y son los mejores que he probado. El papel aguanta de todo y las estrellas son un puntazo.', color: 'var(--orange)', initials: 'CS' },
 ];
 
+const STATS = [
+  { to: 12, suffix: 'k+', lbl: 'clientes felices' },
+  { to: 38, suffix: '', lbl: 'productos en catálogo' },
+  { to: 100, suffix: '%', lbl: 'diseño propio' },
+];
+
 /* ============== ICONS ============== */
 const Icon = ({ name, size = 20 }) => {
   const props = { width: size, height: size, viewBox: '0 0 24 24', fill: 'none', stroke: 'currentColor', strokeWidth: '2', strokeLinecap: 'round', strokeLinejoin: 'round' };
@@ -56,25 +66,24 @@ const Icon = ({ name, size = 20 }) => {
     case 'minus': return <svg {...props}><line x1="5" y1="12" x2="19" y2="12" /></svg>;
     case 'arrow': return <svg {...props}><line x1="5" y1="12" x2="19" y2="12" /><polyline points="12 5 19 12 12 19" /></svg>;
     case 'close': return <svg {...props}><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>;
-    case 'menu': return <svg {...props}><line x1="3" y1="6" x2="21" y2="6" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="18" x2="21" y2="18" /></svg>;
     case 'ig': return <svg {...props}><rect x="2" y="2" width="20" height="20" rx="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>;
     case 'tt': return <svg {...props}><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" /></svg>;
     case 'pin': return <svg {...props}><circle cx="12" cy="12" r="10" /><path d="M8 12s1.5 5 4 5 4-3 4-5" /><circle cx="12" cy="9" r="1" /></svg>;
+    case 'moon': return <svg {...props}><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>;
+    case 'sun': return <svg {...props}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>;
     default: return null;
   }
 };
 
-/* ============== ORENDA LOGO ============== */
-const OrendaLogo = ({ className }) => (
-  <img
-    src="/assets/orenda-logo.png"
-    alt="Orenda Diseño Social"
-    className={'orenda-logo-img ' + (className || '')}
-    draggable="false"
-  />
+/* ============== ORENDA LOGO (real wordmark, theme-aware) ============== */
+const OrendaLogo = ({ variant }) => (
+  <span className={'orenda-logo' + (variant ? ' ' + variant : '')}>
+    <img className="logo-light" src="/assets/logo-indigo.png" alt="Orenda Diseño Social" draggable="false" />
+    <img className="logo-dark" src="/assets/logo-cream.png" alt="Orenda Diseño Social" draggable="false" />
+  </span>
 );
 
-/* ============== PRODUCT MOCK (visual placeholder) ============== */
+/* ============== PRODUCT MOCK ============== */
 const ProductMock = ({ type, text, year, icon }) => {
   if (type === 'merch') {
     return (
@@ -141,43 +150,129 @@ const ProductMock = ({ type, text, year, icon }) => {
   return null;
 };
 
-/* ============== NAV ============== */
-const Nav = ({ cartCount, onCartOpen, onNav, currentUser, onAccountClick }) => (
-  <nav className="nav">
-    <div className="nav-inner">
-      <div className="nav-logo" onClick={() => onNav('top')} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
-        <OrendaLogo className="nav-logo-mark" />
-      </div>
-      <div className="nav-links">
-        <a onClick={() => onNav('shop')}>Tienda</a>
-        <a onClick={() => onNav('sublimacion')}>Sublimación</a>
-        <a onClick={() => onNav('collections')}>Colecciones</a>
-        <a onClick={() => onNav('about')}>Sobre Orenda</a>
-        <a onClick={() => onNav('newsletter')}>Newsletter</a>
-      </div>
-      <div className="nav-actions">
-        <button
-          className={'icon-btn ' + (currentUser ? 'icon-btn-active' : '')}
-          aria-label={currentUser ? `Cuenta de ${currentUser.name}` : 'Cuenta'}
-          onClick={onAccountClick}
-          title={currentUser ? currentUser.name : 'Crear cuenta o iniciar sesión'}
-        >
-          {currentUser
-            ? <span className="user-initial">{currentUser.name.slice(0, 1).toUpperCase()}</span>
-            : <Icon name="user" />}
-        </button>
-        <button className="icon-btn" aria-label="Carrito" onClick={onCartOpen}>
-          <Icon name="cart" />
-          <span className={'cart-badge ' + (cartCount > 0 ? 'show' : '')}>{cartCount}</span>
-        </button>
+/* ============== PRODUCT VISUAL (photo with mock fallback) ============== */
+const ProductVisual = ({ p, cls }) => {
+  const [err, setErr] = useState(false);
+  if (p.image && !err) return <img src={p.image} alt={p.name} className={cls} loading="lazy" onError={() => setErr(true)} />;
+  return <ProductMock type={p.mock} text={p.mockText} year={p.mockYr} icon={p.mockIcon} />;
+};
+
+const ItemThumb = ({ item }) => {
+  const [err, setErr] = useState(false);
+  if (item.image && !err) return <img src={item.image} alt="" onError={() => setErr(true)} />;
+  return <span>{item.name.split(' ')[0].slice(0, 3)}</span>;
+};
+
+/* ============== COUNT-UP ============== */
+const CountUp = ({ to, suffix = '', dur = 1400 }) => {
+  const ref = useRef(null);
+  const [val, setVal] = useState(0);
+  const fired = useRef(false);
+  useEffect(() => {
+    const el = ref.current; if (!el) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { setVal(to); return; }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting && !fired.current) {
+          fired.current = true;
+          const start = performance.now();
+          const tick = (now) => {
+            const p = Math.min(1, (now - start) / dur);
+            const eased = 1 - Math.pow(1 - p, 3);
+            setVal(Math.round(to * eased));
+            if (p < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.6 });
+    io.observe(el);
+    return () => io.disconnect();
+  }, [to]);
+  return <span ref={ref}>{val}{suffix}</span>;
+};
+
+/* ============== ANNOUNCEMENT BAR ============== */
+const Announce = () => {
+  const items = ['Envío gratis a partir de $700', 'Nueva colección Constelación 2026', 'Nuevo: sublimación a todo color', 'Hecho a mano en Sonora'];
+  const loop = [...items, ...items];
+  return (
+    <div className="announce">
+      <div className="announce-track">
+        {loop.map((t, i) => <span key={i}>{t}</span>)}
       </div>
     </div>
-  </nav>
-);
+  );
+};
+
+/* ============== SCROLL PROGRESS ============== */
+const ScrollProgress = () => {
+  const ref = useRef(null);
+  useEffect(() => {
+    const onScroll = () => {
+      const h = document.documentElement;
+      const max = h.scrollHeight - h.clientHeight;
+      const pct = max > 0 ? (h.scrollTop / max) * 100 : 0;
+      if (ref.current) ref.current.style.width = pct + '%';
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return <div className="scroll-progress" ref={ref}></div>;
+};
+
+/* ============== NAV ============== */
+const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme, currentUser, onAccountClick }) => {
+  const badgeRef = useRef(null);
+  const prev = useRef(cartCount);
+  useEffect(() => {
+    if (cartCount > prev.current && badgeRef.current) {
+      badgeRef.current.classList.remove('bump');
+      void badgeRef.current.offsetWidth;
+      badgeRef.current.classList.add('bump');
+    }
+    prev.current = cartCount;
+  }, [cartCount]);
+  return (
+    <nav className="nav">
+      <div className="nav-inner">
+        <div className="nav-logo" onClick={() => onNav('top')} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
+          <OrendaLogo variant="nav-logo-mark" />
+        </div>
+        <div className="nav-links">
+          <a onClick={() => onNav('shop')}>Tienda</a>
+          <a onClick={() => onNav('sublimacion')}>Sublimación</a>
+          <a onClick={() => onNav('collections')}>Colecciones</a>
+          <a onClick={() => onNav('about')}>Sobre Orenda</a>
+          <a onClick={() => onNav('newsletter')}>Newsletter</a>
+        </div>
+        <div className="nav-actions">
+          <button className="icon-btn theme-toggle" aria-label="Cambiar tema" onClick={onToggleTheme}>
+            <span className="tt-icon"><Icon name={theme === 'dark' ? 'sun' : 'moon'} /></span>
+          </button>
+          <button
+            className={'icon-btn ' + (currentUser ? 'icon-btn-active' : '')}
+            aria-label={currentUser ? `Cuenta de ${currentUser.name}` : 'Cuenta'}
+            title={currentUser ? currentUser.name : 'Crear cuenta o iniciar sesión'}
+            onClick={onAccountClick}
+          >
+            {currentUser ? <span className="user-initial">{currentUser.name.slice(0, 1).toUpperCase()}</span> : <Icon name="user" />}
+          </button>
+          <button className="icon-btn" aria-label="Carrito" onClick={onCartOpen}>
+            <Icon name="cart" />
+            <span ref={badgeRef} className={'cart-badge ' + (cartCount > 0 ? 'show' : '')}>{cartCount}</span>
+          </button>
+        </div>
+      </div>
+    </nav>
+  );
+};
 
 /* ============== HERO ============== */
 const Hero = ({ onNav }) => (
-  <section className="hero" id="top">
+  <section className="hero" id="top" data-reveal>
     <div className="hero-pattern"></div>
     <div className="hero-content">
       <div className="eyebrow"><span className="dot"></span>Nueva colección 2026 ya disponible</div>
@@ -190,15 +285,16 @@ const Hero = ({ onNav }) => (
         Hechos a mano en pequeño formato, con papel bonito y muchísimo cariño.
       </p>
       <div className="hero-cta">
-        <button className="btn btn-primary" onClick={() => onNav('shop')}>
-          Ver tienda <Icon name="arrow" size={16} />
-        </button>
+        <button className="btn btn-primary" onClick={() => onNav('shop')}>Ver tienda <Icon name="arrow" size={16} /></button>
         <button className="btn btn-ghost" onClick={() => onNav('about')}>Conoce a Orenda</button>
       </div>
       <div className="hero-stats">
-        <div className="stat"><div className="num">12k+</div><div className="lbl">clientes felices</div></div>
-        <div className="stat"><div className="num">38</div><div className="lbl">productos en catálogo</div></div>
-        <div className="stat"><div className="num">100%</div><div className="lbl">diseño propio</div></div>
+        {STATS.map((s, i) => (
+          <div className="stat" key={i}>
+            <div className="num"><CountUp to={s.to} suffix={s.suffix} /></div>
+            <div className="lbl">{s.lbl}</div>
+          </div>
+        ))}
       </div>
     </div>
     <div className="hero-art">
@@ -212,64 +308,59 @@ const Hero = ({ onNav }) => (
   </section>
 );
 
-/* ============== SHOP ============== */
-const ProductCard = ({ p, onAdd, onLike, liked, onQuickView }) => (
-  <div className="card" onClick={() => onQuickView(p)}>
-    <div className="card-img" style={{ background: p.color }}>
-      {p.badge && <div className={'badge ' + p.badge}>{p.badge === 'new' ? 'Nuevo' : p.badge === 'bestseller' ? 'Más vendido' : 'Edición limitada'}</div>}
-      <button
-        className={'like-btn ' + (liked ? 'liked' : '')}
-        onClick={(e) => { e.stopPropagation(); onLike(p.id); }}
-        aria-label={liked ? 'Quitar de favoritos' : 'Añadir a favoritos'}
-      >
-        <Icon name="heart" size={16} />
-      </button>
-      {p.image
-        ? <img src={p.image} alt={p.name} className="card-photo" loading="lazy" />
-        : <ProductMock type={p.mock} text={p.mockText} year={p.mockYr} icon={p.mockIcon} />}
-    </div>
-    <div className="card-body">
-      <div className="card-cat">{p.catLbl}</div>
-      <div className="card-name">{p.name}</div>
-      <div className="card-desc">{p.desc.length > 70 ? p.desc.slice(0, 70) + '…' : p.desc}</div>
-      <div className="card-foot">
-        <div className="price">
-          {p.oldPrice && <del>${p.oldPrice}</del>}
-          <small>desde</small>${p.price}
-        </div>
-        <button className="add-btn" onClick={(e) => { e.stopPropagation(); onAdd(p); }} aria-label="Añadir al carrito">
-          <Icon name="plus" size={16} />
+/* ============== PRODUCT CARD (with tilt) ============== */
+const ProductCard = ({ p, onAdd, onLike, liked, onQuickView, index }) => {
+  const ref = useRef(null);
+  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const onMove = (e) => {
+    if (reduce || !ref.current) return;
+    const r = ref.current.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    ref.current.style.transform = `perspective(800px) rotateY(${px * 7}deg) rotateX(${-py * 7}deg) translateY(-6px)`;
+  };
+  const onLeave = () => { if (ref.current) ref.current.style.transform = ''; };
+  return (
+    <div className="card" ref={ref} onMouseMove={onMove} onMouseLeave={onLeave}
+      onClick={() => onQuickView(p)} data-reveal style={{ transitionDelay: (index % 4) * 70 + 'ms' }}>
+      <div className="card-img" style={{ background: p.color }}>
+        {p.badge && <div className={'badge ' + p.badge}>{p.badge === 'new' ? 'Nuevo' : p.badge === 'bestseller' ? 'Más vendido' : 'Edición limitada'}</div>}
+        <button className={'like-btn ' + (liked ? 'liked' : '')} onClick={(e) => { e.stopPropagation(); e.currentTarget.classList.remove('pop'); void e.currentTarget.offsetWidth; e.currentTarget.classList.add('pop'); onLike(p.id); }} aria-label={liked ? 'Quitar de favoritos' : 'Añadir a favoritos'}>
+          <Icon name="heart" size={16} />
         </button>
+        <ProductVisual p={p} cls="card-photo" />
+      </div>
+      <div className="card-body">
+        <div className="card-cat">{p.catLbl}</div>
+        <div className="card-name">{p.name}</div>
+        <div className="card-desc">{p.desc.length > 70 ? p.desc.slice(0, 70) + '…' : p.desc}</div>
+        <div className="card-foot">
+          <div className="price">{p.oldPrice && <del>${p.oldPrice}</del>}<small>desde</small>${p.price}</div>
+          <button className="add-btn" onClick={(e) => { e.stopPropagation(); onAdd(p); }} aria-label="Añadir al carrito"><Icon name="plus" size={16} /></button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
+/* ============== SHOP ============== */
 const Shop = ({ onAdd, liked, onLike, onQuickView }) => {
   const [cat, setCat] = useState('todos');
   const filtered = useMemo(() => cat === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat), [cat]);
   return (
     <section id="shop">
-      <div className="section-head">
-        <div>
-          <h2>La <em>tienda</em><br />de Orenda</h2>
-        </div>
+      <div className="section-head" data-reveal>
+        <div><h2>La <em>tienda</em><br />de Orenda</h2></div>
         <p>Piezas pensadas para acompañar tus días: organiza, decora y regala con un toque de color.</p>
       </div>
-      <div className="cat-tabs">
+      <div className="cat-tabs" data-reveal>
         {CATEGORIES.map(c => {
           const count = c.id === 'todos' ? PRODUCTS.length : PRODUCTS.filter(p => p.cat === c.id).length;
-          return (
-            <button key={c.id} className={'cat-tab ' + (cat === c.id ? 'active' : '')} onClick={() => setCat(c.id)}>
-              {c.label}<span className="cat-count">{count}</span>
-            </button>
-          );
+          return <button key={c.id} className={'cat-tab ' + (cat === c.id ? 'active' : '')} onClick={() => setCat(c.id)}>{c.label}<span className="cat-count">{count}</span></button>;
         })}
       </div>
       <div className="grid">
-        {filtered.map(p => (
-          <ProductCard key={p.id} p={p} onAdd={onAdd} onLike={onLike} liked={liked.includes(p.id)} onQuickView={onQuickView} />
-        ))}
+        {filtered.map((p, i) => <ProductCard key={p.id} p={p} index={i} onAdd={onAdd} onLike={onLike} liked={liked.includes(p.id)} onQuickView={onQuickView} />)}
       </div>
     </section>
   );
@@ -278,7 +369,7 @@ const Shop = ({ onAdd, liked, onLike, onQuickView }) => {
 /* ============== ABOUT ============== */
 const About = () => (
   <section id="about" style={{ padding: 0 }}>
-    <div className="about-band">
+    <div className="about-band" data-reveal>
       <div>
         <h2>Detrás de Orenda hay<br />una idea: <em>diseñar bonito<br />también es cuidar</em>.</h2>
         <p>Nacimos en Cruz de Piedra, Sonora, con dos cuadernos, una impresora cansada y muchas ganas. Hoy somos un estudio pequeño que diseña, imprime y envía cada pedido a mano.</p>
@@ -310,9 +401,9 @@ const Sublimation = ({ onNav }) => {
   ];
   return (
     <section id="sublimacion">
-      <div className="sublim-band">
+      <div className="sublim-band" data-reveal>
         <div className="sublim-head">
-          <div className="eyebrow" style={{ background: 'var(--cream)', boxShadow: '3px 3px 0 var(--pink)' }}>
+          <div className="eyebrow" style={{ background: 'var(--surface)', boxShadow: '3px 3px 0 var(--pink)' }}>
             <span className="dot"></span>Nuevo servicio
           </div>
           <h2>Sublimación a <em>todo color</em>,<br />en cualquier superficie.</h2>
@@ -321,12 +412,12 @@ const Sublimation = ({ onNav }) => {
             <button className="btn btn-primary" onClick={() => onNav('shop')}>
               Ver productos sublimables <Icon name="arrow" size={16} />
             </button>
-            <a className="btn btn-ghost" href="https://wa.me/?text=Hola%20Orenda%2C%20quiero%20cotizar%20una%20sublimaci%C3%B3n" target="_blank" rel="noopener noreferrer">Cotizar mi diseño</a>
+            <a className="btn btn-ghost" href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20una%20sublimaci%C3%B3n')} target="_blank" rel="noopener noreferrer">Cotizar mi diseño</a>
           </div>
         </div>
         <div className="sublim-grid">
           {items.map((it, i) => (
-            <div key={i} className="sublim-item">
+            <div key={i} className="sublim-item" data-reveal style={{ transitionDelay: (i % 5) * 60 + 'ms' }}>
               <div className="sublim-ic">{it.ic}</div>
               <div className="sublim-lbl">{it.lbl}</div>
             </div>
@@ -340,22 +431,19 @@ const Sublimation = ({ onNav }) => {
 /* ============== COLLECTIONS ============== */
 const Collections = ({ onNav }) => (
   <section id="collections">
-    <div className="section-head">
+    <div className="section-head" data-reveal>
       <div><h2>Por <em>colecciones</em></h2></div>
       <p>Encuentra el universo Orenda que mejor encaja contigo. De lo más cálido a lo más vibrante.</p>
     </div>
     <div className="collections">
-      <div className="col col-1" onClick={() => onNav('shop')}>
-        <div>
-          <h3>Constelación<br />2026</h3>
-          <p>Agendas, libretas y stickers de la nueva colección estrella. Tonos coral y azul cielo.</p>
-        </div>
+      <div className="col col-1" data-reveal onClick={() => onNav('shop')}>
+        <div><h3>Constelación<br />2026</h3><p>Agendas, libretas y stickers de la nueva colección estrella. Tonos coral y azul cielo.</p></div>
         <div className="arrow"><Icon name="arrow" size={18} /></div>
       </div>
-      <div className="col col-2" onClick={() => onNav('shop')}><div><h3>Confetti</h3><p>Vibrante y festivo.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
-      <div className="col col-3" onClick={() => onNav('shop')}><div><h3>Cielo</h3><p>Azules y calma.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
-      <div className="col col-4" onClick={() => onNav('shop')}><div><h3>Hojaverde</h3><p>Botánico y suave.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
-      <div className="col col-5" onClick={() => onNav('shop')}><div><h3>Sol</h3><p>Cálido y energético.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
+      <div className="col col-2" data-reveal style={{ transitionDelay: '60ms' }} onClick={() => onNav('shop')}><div><h3>Confetti</h3><p>Vibrante y festivo.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
+      <div className="col col-3" data-reveal style={{ transitionDelay: '120ms' }} onClick={() => onNav('shop')}><div><h3>Cielo</h3><p>Azules y calma.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
+      <div className="col col-4" data-reveal style={{ transitionDelay: '180ms' }} onClick={() => onNav('shop')}><div><h3>Hojaverde</h3><p>Botánico y suave.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
+      <div className="col col-5" data-reveal style={{ transitionDelay: '240ms' }} onClick={() => onNav('shop')}><div><h3>Sol</h3><p>Cálido y energético.</p></div><div className="arrow"><Icon name="arrow" size={16} /></div></div>
     </div>
   </section>
 );
@@ -363,23 +451,20 @@ const Collections = ({ onNav }) => (
 /* ============== TESTIMONIALS ============== */
 const Testimonials = () => (
   <section>
-    <div className="testimonials">
+    <div className="testimonials" data-reveal>
       <div className="section-head" style={{ marginBottom: 32 }}>
         <div><h2>Lo que dicen<br />de <em>nosotros</em></h2></div>
         <p>Más de 12.000 personas ya han metido un trocito de Orenda en su día a día.</p>
       </div>
       <div className="testi-grid">
         {TESTIMONIALS.map((t, i) => (
-          <div key={i} className="testi">
+          <div key={i} className="testi" data-reveal style={{ transitionDelay: i * 90 + 'ms' }}>
             <div className="quote-mark">"</div>
             <div className="stars-r">★★★★★</div>
             <p>{t.text}</p>
             <div className="who">
               <div className="ava" style={{ background: t.color }}>{t.initials}</div>
-              <div>
-                <div className="nm">{t.name}</div>
-                <div className="rl">{t.role}</div>
-              </div>
+              <div><div className="nm">{t.name}</div><div className="rl">{t.role}</div></div>
             </div>
           </div>
         ))}
@@ -394,32 +479,19 @@ const Newsletter = () => {
   const [sent, setSent] = useState(false);
   const submit = (e) => {
     e.preventDefault();
-    if (email && email.includes('@')) {
-      setSent(true);
-      setEmail('');
-      setTimeout(() => setSent(false), 3000);
-    }
+    if (email && email.includes('@')) { setSent(true); setEmail(''); setTimeout(() => setSent(false), 3000); }
   };
   return (
     <section id="newsletter">
-      <div className="newsletter">
+      <div className="newsletter" data-reveal>
         <h2>Únete al <em>club</em> Orenda</h2>
         <p>Una vez al mes te mandamos novedades, descargables gratis y descuentos solo-para-suscriptores. Cero spam, mucho cariño.</p>
         <form className="nl-form" onSubmit={submit}>
-          <input
-            type="email"
-            placeholder={sent ? '¡Bienvenida al club! ✦' : 'tu@email.com'}
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            disabled={sent}
-            aria-label="Email"
-          />
+          <input type="email" placeholder={sent ? '¡Bienvenida al club! ✦' : 'tu@email.com'} value={email} onChange={(e) => setEmail(e.target.value)} disabled={sent} aria-label="Email" />
           <button className="btn" type="submit">{sent ? '¡Hecho!' : 'Suscribirme'}</button>
         </form>
         <div className="nl-perks">
-          <span>10% en tu primera compra</span>
-          <span>Imprimibles gratis</span>
-          <span>Acceso anticipado a nuevas colecciones</span>
+          <span>10% en tu primera compra</span><span>Imprimibles gratis</span><span>Acceso anticipado a nuevas colecciones</span>
         </div>
       </div>
     </section>
@@ -428,10 +500,10 @@ const Newsletter = () => {
 
 /* ============== FOOTER ============== */
 const Footer = () => (
-  <footer>
+  <footer data-reveal>
     <div className="foot-grid">
       <div className="foot-brand">
-        <OrendaLogo className="foot-logo-mark" />
+        <OrendaLogo variant="foot-logo-mark" />
         <p>Estudio de diseño social y papelería con alma. Hecho con calma desde Cruz de Piedra, Sonora.</p>
         <div className="socials">
           <a href="https://instagram.com/orenda.social" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon name="ig" size={16} /></a>
@@ -439,43 +511,34 @@ const Footer = () => (
           <a href="#" aria-label="Pinterest"><Icon name="pin" size={16} /></a>
         </div>
       </div>
-      <div>
-        <h5>Tienda</h5>
-        <a>Agendas & Planners</a><a>Libretas</a><a>Stickers</a><a>Tarjetas</a><a>Kits creativos</a>
-      </div>
-      <div>
-        <h5>Orenda</h5>
-        <a>Sobre nosotras</a><a>Sostenibilidad</a><a>Imprimibles gratis</a><a>Talleres</a><a>Prensa</a>
-      </div>
-      <div>
-        <h5>Ayuda</h5>
-        <a>Envíos y devoluciones</a><a>Contacto</a><a>FAQs</a><a>Mi cuenta</a><a>Tarjetas regalo</a>
-      </div>
+      <div><h5>Tienda</h5><a>Agendas & Planners</a><a>Libretas</a><a>Stickers</a><a>Tarjetas</a><a>Sublimación</a></div>
+      <div><h5>Orenda</h5><a>Sobre nosotras</a><a>Sostenibilidad</a><a>Imprimibles gratis</a><a>Talleres</a><a>Prensa</a></div>
+      <div><h5>Ayuda</h5><a>Envíos y devoluciones</a><a>Contacto</a><a>FAQs</a><a>Mi cuenta</a><a>Tarjetas regalo</a></div>
     </div>
     <div className="foot-bottom">
-      <span>© {new Date().getFullYear()} Orenda Diseño Social · Valencia, España</span>
+      <span>© {new Date().getFullYear()} Orenda Diseño Social · Cruz de Piedra, Sonora · México</span>
       <span>Política de privacidad · Términos · Cookies</span>
     </div>
   </footer>
 );
 
 /* ============== CART DRAWER ============== */
+const FREE_SHIPPING = 700;
+const SHIPPING_COST = 80;
+const fmt = (n) => n.toLocaleString('es-MX');
+
 const CartDrawer = ({ open, onClose, cart, setCart }) => {
   const remove = (id) => setCart(cart.filter(c => c.id !== id));
   const updateQty = (id, delta) => setCart(cart.map(c => c.id === id ? { ...c, qty: Math.max(1, c.qty + delta) } : c));
   const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  const FREE_SHIPPING_THRESHOLD = 700;
-  const SHIPPING_COST = 80;
-  const shipping = subtotal > 0 ? (subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST) : 0;
-  const fmt = (n) => n.toLocaleString('es-MX');
-
+  const shipping = subtotal > 0 ? (subtotal >= FREE_SHIPPING ? 0 : SHIPPING_COST) : 0;
+  const freePct = Math.min(100, (subtotal / FREE_SHIPPING) * 100);
   const checkout = () => {
     const lines = cart.map(i => `• ${i.qty}× ${i.name} — $${fmt(i.price * i.qty)} MXN`).join('%0A');
     const total = fmt(subtotal + shipping);
     const msg = `¡Hola Orenda! Quiero hacer un pedido:%0A%0A${lines}%0A%0ATotal: $${total} MXN`;
-    window.open(`https://wa.me/?text=${msg}`, '_blank');
+    window.open(waLink(msg), '_blank');
   };
-
   return (
     <>
       <div className={'drawer-overlay ' + (open ? 'open' : '')} onClick={onClose}></div>
@@ -492,7 +555,9 @@ const CartDrawer = ({ open, onClose, cart, setCart }) => {
             </div>
           ) : cart.map(item => (
             <div key={item.id} className="cart-item">
-              <div className="cart-item-img" style={{ background: item.color }}>{item.name.split(' ')[0].slice(0, 3)}</div>
+              <div className="cart-item-img" style={{ background: item.color }}>
+                <ItemThumb item={item} />
+              </div>
               <div>
                 <h4>{item.name}</h4>
                 <div className="meta">{item.catLbl}</div>
@@ -511,15 +576,20 @@ const CartDrawer = ({ open, onClose, cart, setCart }) => {
         </div>
         {cart.length > 0 && (
           <div className="drawer-foot">
+            <div className={'ship-meter ' + (shipping === 0 ? 'done' : '')}>
+              <div className="lbl">{shipping === 0 ? '🎉 ¡Tienes envío gratis!' : <>Te faltan <b>${fmt(FREE_SHIPPING - subtotal)}</b> para el envío gratis</>}</div>
+              <div className="ship-bar"><i style={{ width: freePct + '%' }}></i></div>
+            </div>
             <div className="totals">
               <div className="row"><span>Subtotal</span><span>${fmt(subtotal)}</span></div>
-              <div className="row"><span>Envío {subtotal >= FREE_SHIPPING_THRESHOLD && <em style={{ color: 'var(--pink)', fontStyle: 'normal' }}>· gratis</em>}</span><span>{shipping === 0 ? '$0' : '$' + fmt(shipping)}</span></div>
-              <div className="row tot"><span>Total</span><span>${fmt(subtotal + shipping)} <small style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink-soft)', letterSpacing: '.05em' }}>MXN</small></span></div>
+              <div className="row"><span>Envío {shipping === 0 && <em style={{ color: 'var(--pink)', fontStyle: 'normal' }}>· gratis</em>}</span><span>{shipping === 0 ? '$0' : '$' + fmt(shipping)}</span></div>
+              <div className="row tot"><span>Total</span><span>${fmt(subtotal + shipping)} <small style={{ fontSize: 12, fontWeight: 700, color: 'var(--text-soft)', letterSpacing: '.05em' }}>MXN</small></span></div>
             </div>
-            <button className="btn btn-primary checkout-btn" onClick={checkout}>
-              Ir al checkout <Icon name="arrow" size={16} />
-            </button>
-            {subtotal < FREE_SHIPPING_THRESHOLD && <p style={{ fontSize: 12, color: 'var(--ink-soft)', textAlign: 'center', marginTop: 10 }}>Te faltan <strong>${fmt(FREE_SHIPPING_THRESHOLD - subtotal)}</strong> para envío gratis ✦</p>}
+            <p className="wa-hint">
+              Te abriremos WhatsApp con tu pedido pre-llenado. Si es tu primera vez,
+              <b> guarda nuestro número (622 151 3198)</b> como <b>“Orenda”</b> para que el chat aparezca directo.
+            </p>
+            <button className="btn btn-primary checkout-btn" onClick={checkout}>Enviar pedido por WhatsApp <Icon name="arrow" size={16} /></button>
           </div>
         )}
       </aside>
@@ -531,29 +601,20 @@ const CartDrawer = ({ open, onClose, cart, setCart }) => {
 const QuickView = ({ product, onClose, onAdd }) => {
   if (!product) return null;
   return (
-    <div className={'modal-ov open'} onClick={onClose}>
+    <div className="modal-ov open" onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close modal-close-top" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
         <div className="modal-img" style={{ background: product.color }}>
-          {product.image
-            ? <img src={product.image} alt={product.name} className="modal-photo" />
-            : <ProductMock type={product.mock} text={product.mockText} year={product.mockYr} icon={product.mockIcon} />}
+          <ProductVisual key={product.id} p={product} cls="modal-photo" />
         </div>
         <div className="modal-info">
+          <button className="modal-close" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
           <div className="cat-tag">{product.catLbl}</div>
           <h2>{product.name}</h2>
-          <div className="price-big">
-            {product.oldPrice && <del style={{ fontSize: 18, color: 'var(--ink-soft)', marginRight: 10, fontWeight: 600 }}>${product.oldPrice}</del>}
-            ${product.price} <span style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, letterSpacing: '.05em' }}>MXN</span>
-          </div>
+          <div className="price-big">{product.oldPrice && <del style={{ fontSize: 18, color: 'var(--text-soft)', marginRight: 10, fontWeight: 600 }}>${product.oldPrice}</del>}${product.price} <span style={{ fontSize: 14, color: 'var(--text-soft)', fontWeight: 600, letterSpacing: '.05em' }}>MXN</span></div>
           <p className="desc">{product.desc}</p>
-          <div className="modal-feat">
-            {product.feats.map((f, i) => <div key={i} className="ft">{f}</div>)}
-          </div>
+          <div className="modal-feat">{product.feats.map((f, i) => <div key={i} className="ft">{f}</div>)}</div>
           <div className="modal-actions">
-            <button className="btn btn-primary" onClick={() => { onAdd(product); onClose(); }}>
-              Añadir al carrito <Icon name="cart" size={16} />
-            </button>
+            <button className="btn btn-primary" onClick={() => { onAdd(product); onClose(); }}>Añadir al carrito <Icon name="cart" size={16} /></button>
             <button className="btn btn-ghost" onClick={onClose}>Seguir mirando</button>
           </div>
         </div>
@@ -635,16 +696,8 @@ const AuthModal = ({ open, onClose, currentUser, onLogin, onSignup, onLogout }) 
         ) : (
           <div className="auth-body">
             <div className="auth-tabs">
-              <button
-                type="button"
-                className={'auth-tab ' + (mode === 'signup' ? 'active' : '')}
-                onClick={() => { setMode('signup'); setError(''); }}
-              >Crear cuenta</button>
-              <button
-                type="button"
-                className={'auth-tab ' + (mode === 'login' ? 'active' : '')}
-                onClick={() => { setMode('login'); setError(''); }}
-              >Iniciar sesión</button>
+              <button type="button" className={'auth-tab ' + (mode === 'signup' ? 'active' : '')} onClick={() => { setMode('signup'); setError(''); }}>Crear cuenta</button>
+              <button type="button" className={'auth-tab ' + (mode === 'login' ? 'active' : '')} onClick={() => { setMode('login'); setError(''); }}>Iniciar sesión</button>
             </div>
             <h2>{mode === 'signup' ? <>Únete al <em>club</em> Orenda</> : <>Bienvenida de <em>vuelta</em></>}</h2>
             <p className="auth-sub">{mode === 'signup' ? 'Crea tu cuenta para guardar favoritos y agilizar tus pedidos.' : 'Inicia sesión para ver tu cuenta.'}</p>
@@ -652,37 +705,16 @@ const AuthModal = ({ open, onClose, currentUser, onLogin, onSignup, onLogout }) 
               {mode === 'signup' && (
                 <label>
                   <span>Nombre</span>
-                  <input
-                    type="text"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    placeholder="Cómo te llamamos"
-                    autoComplete="name"
-                    required
-                  />
+                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Cómo te llamamos" autoComplete="name" required />
                 </label>
               )}
               <label>
                 <span>Correo</span>
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="tu@correo.com"
-                  autoComplete="email"
-                  required
-                />
+                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@correo.com" autoComplete="email" required />
               </label>
               <label>
                 <span>Contraseña</span>
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Mínimo 6 caracteres"
-                  autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
-                  required
-                />
+                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mínimo 6 caracteres" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required />
               </label>
               {error && <div className="auth-error">{error}</div>}
               <button className="btn btn-primary" type="submit" disabled={loading}>
@@ -705,19 +737,12 @@ const AuthModal = ({ open, onClose, currentUser, onLogin, onSignup, onLogout }) 
 
 /* ============== TOAST ============== */
 const Toast = ({ msg, show }) => (
-  <div className={'toast ' + (show ? 'show' : '')}>
-    <span className="ic">✓</span> {msg}
-  </div>
+  <div className={'toast ' + (show ? 'show' : '')}><span className="ic">✓</span> {msg}</div>
 );
 
 /* ============== APP ============== */
 const loadPersisted = (key, fallback) => {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  } catch {
-    return fallback;
-  }
+  try { const raw = localStorage.getItem(key); return raw ? JSON.parse(raw) : fallback; } catch { return fallback; }
 };
 
 export default function App() {
@@ -728,6 +753,11 @@ export default function App() {
   const [toast, setToast] = useState({ msg: '', show: false });
   const [currentUser, setCurrentUser] = useState(() => loadPersisted('orenda:currentUser', null));
   const [authOpen, setAuthOpen] = useState(false);
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('orenda:theme');
+    if (saved) return saved;
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+  });
   const toastTimer = useRef(null);
 
   useEffect(() => { localStorage.setItem('orenda:cart', JSON.stringify(cart)); }, [cart]);
@@ -736,6 +766,25 @@ export default function App() {
     if (currentUser) localStorage.setItem('orenda:currentUser', JSON.stringify(currentUser));
     else localStorage.removeItem('orenda:currentUser');
   }, [currentUser]);
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+    localStorage.setItem('orenda:theme', theme);
+  }, [theme]);
+
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      document.querySelectorAll('[data-reveal]').forEach(e => e.classList.add('in'));
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
+    const scan = () => document.querySelectorAll('[data-reveal]:not(.in)').forEach(e => io.observe(e));
+    scan();
+    const mo = new MutationObserver(scan);
+    mo.observe(document.body, { childList: true, subtree: true });
+    return () => { io.disconnect(); mo.disconnect(); };
+  }, []);
 
   useEffect(() => {
     const onKey = (e) => {
@@ -812,23 +861,16 @@ export default function App() {
   const handleNav = useCallback((id) => {
     if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     const el = document.getElementById(id);
-    if (el) {
-      const y = el.getBoundingClientRect().top + window.scrollY - 80;
-      window.scrollTo({ top: y, behavior: 'smooth' });
-    }
+    if (el) { const y = el.getBoundingClientRect().top + window.scrollY - 80; window.scrollTo({ top: y, behavior: 'smooth' }); }
   }, []);
 
   const cartCount = cart.reduce((s, c) => s + c.qty, 0);
 
   return (
     <>
-      <Nav
-        cartCount={cartCount}
-        onCartOpen={() => setDrawerOpen(true)}
-        onNav={handleNav}
-        currentUser={currentUser}
-        onAccountClick={() => setAuthOpen(true)}
-      />
+      <ScrollProgress />
+      <Announce />
+      <Nav cartCount={cartCount} onCartOpen={() => setDrawerOpen(true)} onNav={handleNav} theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} currentUser={currentUser} onAccountClick={() => setAuthOpen(true)} />
       <Hero onNav={handleNav} />
       <Shop onAdd={handleAdd} liked={liked} onLike={handleLike} onQuickView={setQuickView} />
       <About />
@@ -839,14 +881,7 @@ export default function App() {
       <Footer />
       <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} cart={cart} setCart={setCart} />
       <QuickView product={quickView} onClose={() => setQuickView(null)} onAdd={handleAdd} />
-      <AuthModal
-        open={authOpen}
-        onClose={() => setAuthOpen(false)}
-        currentUser={currentUser}
-        onLogin={handleLogin}
-        onSignup={handleSignup}
-        onLogout={handleLogout}
-      />
+      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} currentUser={currentUser} onLogin={handleLogin} onSignup={handleSignup} onLogout={handleLogout} />
       <Toast msg={toast.msg} show={toast.show} />
     </>
   );
