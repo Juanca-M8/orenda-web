@@ -224,7 +224,7 @@ const ScrollProgress = () => {
 };
 
 /* ============== NAV ============== */
-const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme, currentUser, onAccountClick }) => {
+const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
   const badgeRef = useRef(null);
   const prev = useRef(cartCount);
   useEffect(() => {
@@ -251,14 +251,6 @@ const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme, currentUser, 
         <div className="nav-actions">
           <button className="icon-btn theme-toggle" aria-label="Cambiar tema" onClick={onToggleTheme}>
             <span className="tt-icon"><Icon name={theme === 'dark' ? 'sun' : 'moon'} /></span>
-          </button>
-          <button
-            className={'icon-btn ' + (currentUser ? 'icon-btn-active' : '')}
-            aria-label={currentUser ? `Cuenta de ${currentUser.name}` : 'Cuenta'}
-            title={currentUser ? currentUser.name : 'Crear cuenta o iniciar sesión'}
-            onClick={onAccountClick}
-          >
-            {currentUser ? <span className="user-initial">{currentUser.name.slice(0, 1).toUpperCase()}</span> : <Icon name="user" />}
           </button>
           <button className="icon-btn" aria-label="Carrito" onClick={onCartOpen}>
             <Icon name="cart" />
@@ -513,7 +505,7 @@ const Footer = () => (
       </div>
       <div><h5>Tienda</h5><a>Agendas & Planners</a><a>Libretas</a><a>Stickers</a><a>Tarjetas</a><a>Sublimación</a></div>
       <div><h5>Orenda</h5><a>Sobre nosotras</a><a>Sostenibilidad</a><a>Imprimibles gratis</a><a>Talleres</a><a>Prensa</a></div>
-      <div><h5>Ayuda</h5><a>Envíos y devoluciones</a><a>Contacto</a><a>FAQs</a><a>Mi cuenta</a><a>Tarjetas regalo</a></div>
+      <div><h5>Ayuda</h5><a>Envíos y devoluciones</a><a>Contacto</a><a>FAQs</a><a>Tarjetas regalo</a></div>
     </div>
     <div className="foot-bottom">
       <span>© {new Date().getFullYear()} Orenda Diseño Social · Cruz de Piedra, Sonora · México</span>
@@ -623,118 +615,6 @@ const QuickView = ({ product, onClose, onAdd }) => {
   );
 };
 
-/* ============== AUTH MODAL ============== */
-const AuthModal = ({ open, onClose, currentUser, onLogin, onSignup, onLogout }) => {
-  const [mode, setMode] = useState('signup');
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    if (open) {
-      setError('');
-      setLoading(false);
-      if (currentUser) setMode('account');
-      else setMode('signup');
-    }
-  }, [open, currentUser]);
-
-  if (!open) return null;
-
-  const reset = () => { setName(''); setEmail(''); setPassword(''); setError(''); };
-
-  const submit = (e) => {
-    e.preventDefault();
-    setError('');
-    const cleanEmail = email.trim().toLowerCase();
-    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
-      setError('Escribe un correo válido.');
-      return;
-    }
-    if (!password || password.length < 6) {
-      setError('La contraseña debe tener al menos 6 caracteres.');
-      return;
-    }
-    if (mode === 'signup') {
-      const cleanName = name.trim();
-      if (cleanName.length < 2) {
-        setError('Dinos cómo te llamas (mínimo 2 letras).');
-        return;
-      }
-      setLoading(true);
-      const result = onSignup({ name: cleanName, email: cleanEmail, password });
-      setLoading(false);
-      if (!result.ok) { setError(result.error); return; }
-      reset();
-    } else if (mode === 'login') {
-      setLoading(true);
-      const result = onLogin({ email: cleanEmail, password });
-      setLoading(false);
-      if (!result.ok) { setError(result.error); return; }
-      reset();
-    }
-  };
-
-  return (
-    <div className="modal-ov open" onClick={onClose}>
-      <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
-
-        {mode === 'account' && currentUser ? (
-          <div className="auth-body">
-            <div className="auth-avatar">{currentUser.name.slice(0, 1).toUpperCase()}</div>
-            <h2>Hola, <em>{currentUser.name.split(' ')[0]}</em></h2>
-            <p className="auth-sub">{currentUser.email}</p>
-            <div className="auth-meta">
-              <div><strong>Miembro desde</strong><span>{new Date(currentUser.createdAt).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</span></div>
-            </div>
-            <button className="btn btn-primary" onClick={onClose}>Seguir comprando</button>
-            <button className="btn btn-ghost" onClick={() => { onLogout(); reset(); }}>Cerrar sesión</button>
-          </div>
-        ) : (
-          <div className="auth-body">
-            <div className="auth-tabs">
-              <button type="button" className={'auth-tab ' + (mode === 'signup' ? 'active' : '')} onClick={() => { setMode('signup'); setError(''); }}>Crear cuenta</button>
-              <button type="button" className={'auth-tab ' + (mode === 'login' ? 'active' : '')} onClick={() => { setMode('login'); setError(''); }}>Iniciar sesión</button>
-            </div>
-            <h2>{mode === 'signup' ? <>Únete al <em>club</em> Orenda</> : <>Bienvenida de <em>vuelta</em></>}</h2>
-            <p className="auth-sub">{mode === 'signup' ? 'Crea tu cuenta para guardar favoritos y agilizar tus pedidos.' : 'Inicia sesión para ver tu cuenta.'}</p>
-            <form className="auth-form" onSubmit={submit}>
-              {mode === 'signup' && (
-                <label>
-                  <span>Nombre</span>
-                  <input type="text" value={name} onChange={(e) => setName(e.target.value)} placeholder="Cómo te llamamos" autoComplete="name" required />
-                </label>
-              )}
-              <label>
-                <span>Correo</span>
-                <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder="tu@correo.com" autoComplete="email" required />
-              </label>
-              <label>
-                <span>Contraseña</span>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Mínimo 6 caracteres" autoComplete={mode === 'signup' ? 'new-password' : 'current-password'} required />
-              </label>
-              {error && <div className="auth-error">{error}</div>}
-              <button className="btn btn-primary" type="submit" disabled={loading}>
-                {loading ? 'Un momento…' : (mode === 'signup' ? 'Crear cuenta' : 'Entrar')}
-                <Icon name="arrow" size={16} />
-              </button>
-            </form>
-            <p className="auth-foot">
-              {mode === 'signup' ? '¿Ya tienes cuenta?' : '¿Nueva por aquí?'}{' '}
-              <a onClick={() => { setMode(mode === 'signup' ? 'login' : 'signup'); setError(''); }}>
-                {mode === 'signup' ? 'Inicia sesión' : 'Crea una cuenta'}
-              </a>
-            </p>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-};
-
 /* ============== TOAST ============== */
 const Toast = ({ msg, show }) => (
   <div className={'toast ' + (show ? 'show' : '')}><span className="ic">✓</span> {msg}</div>
@@ -751,8 +631,6 @@ export default function App() {
   const [liked, setLiked] = useState(() => loadPersisted('orenda:liked', []));
   const [quickView, setQuickView] = useState(null);
   const [toast, setToast] = useState({ msg: '', show: false });
-  const [currentUser, setCurrentUser] = useState(() => loadPersisted('orenda:currentUser', null));
-  const [authOpen, setAuthOpen] = useState(false);
   const [theme, setTheme] = useState(() => {
     const saved = localStorage.getItem('orenda:theme');
     if (saved) return saved;
@@ -763,13 +641,16 @@ export default function App() {
   useEffect(() => { localStorage.setItem('orenda:cart', JSON.stringify(cart)); }, [cart]);
   useEffect(() => { localStorage.setItem('orenda:liked', JSON.stringify(liked)); }, [liked]);
   useEffect(() => {
-    if (currentUser) localStorage.setItem('orenda:currentUser', JSON.stringify(currentUser));
-    else localStorage.removeItem('orenda:currentUser');
-  }, [currentUser]);
-  useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
     localStorage.setItem('orenda:theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    try {
+      localStorage.removeItem('orenda:currentUser');
+      localStorage.removeItem('orenda:users');
+    } catch {}
+  }, []);
 
   useEffect(() => {
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -790,19 +671,18 @@ export default function App() {
     const onKey = (e) => {
       if (e.key === 'Escape') {
         if (quickView) setQuickView(null);
-        else if (authOpen) setAuthOpen(false);
         else if (drawerOpen) setDrawerOpen(false);
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [quickView, drawerOpen, authOpen]);
+  }, [quickView, drawerOpen]);
 
   useEffect(() => {
-    const lock = drawerOpen || !!quickView || authOpen;
+    const lock = drawerOpen || !!quickView;
     document.body.style.overflow = lock ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [drawerOpen, quickView, authOpen]);
+  }, [drawerOpen, quickView]);
 
   const showToast = useCallback((msg) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -823,41 +703,6 @@ export default function App() {
     setLiked(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   }, []);
 
-  const handleSignup = useCallback(({ name, email, password }) => {
-    const users = loadPersisted('orenda:users', []);
-    if (users.some(u => u.email === email)) {
-      return { ok: false, error: 'Ya existe una cuenta con ese correo. Inicia sesión.' };
-    }
-    const user = { name, email, password, createdAt: new Date().toISOString() };
-    const next = [...users, user];
-    localStorage.setItem('orenda:users', JSON.stringify(next));
-    const { password: _pw, ...publicUser } = user;
-    setCurrentUser(publicUser);
-    setAuthOpen(false);
-    showToast(`¡Bienvenida, ${name.split(' ')[0]}!`);
-    return { ok: true };
-  }, [showToast]);
-
-  const handleLogin = useCallback(({ email, password }) => {
-    const users = loadPersisted('orenda:users', []);
-    const found = users.find(u => u.email === email && u.password === password);
-    if (!found) {
-      const exists = users.some(u => u.email === email);
-      return { ok: false, error: exists ? 'Contraseña incorrecta.' : 'No encontramos esa cuenta. Crea una.' };
-    }
-    const { password: _pw, ...publicUser } = found;
-    setCurrentUser(publicUser);
-    setAuthOpen(false);
-    showToast(`Hola otra vez, ${publicUser.name.split(' ')[0]}`);
-    return { ok: true };
-  }, [showToast]);
-
-  const handleLogout = useCallback(() => {
-    setCurrentUser(null);
-    setAuthOpen(false);
-    showToast('Sesión cerrada');
-  }, [showToast]);
-
   const handleNav = useCallback((id) => {
     if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     const el = document.getElementById(id);
@@ -870,7 +715,7 @@ export default function App() {
     <>
       <ScrollProgress />
       <Announce />
-      <Nav cartCount={cartCount} onCartOpen={() => setDrawerOpen(true)} onNav={handleNav} theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} currentUser={currentUser} onAccountClick={() => setAuthOpen(true)} />
+      <Nav cartCount={cartCount} onCartOpen={() => setDrawerOpen(true)} onNav={handleNav} theme={theme} onToggleTheme={() => setTheme(t => t === 'dark' ? 'light' : 'dark')} />
       <Hero onNav={handleNav} />
       <Shop onAdd={handleAdd} liked={liked} onLike={handleLike} onQuickView={setQuickView} />
       <About />
@@ -881,7 +726,6 @@ export default function App() {
       <Footer />
       <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} cart={cart} setCart={setCart} />
       <QuickView product={quickView} onClose={() => setQuickView(null)} onAdd={handleAdd} />
-      <AuthModal open={authOpen} onClose={() => setAuthOpen(false)} currentUser={currentUser} onLogin={handleLogin} onSignup={handleSignup} onLogout={handleLogout} />
       <Toast msg={toast.msg} show={toast.show} />
     </>
   );
