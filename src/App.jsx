@@ -232,9 +232,6 @@ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView }) => (
       <div className="card-cat">{p.catLbl}</div>
       <div className="card-name">{p.name}</div>
       <div className="card-desc">{p.desc.length > 70 ? p.desc.slice(0, 70) + '…' : p.desc}</div>
-      <div className="color-dots">
-        {p.colors.map((c, i) => <div key={i} className="dot-color" style={{ background: c }} />)}
-      </div>
       <div className="card-foot">
         <div className="price">
           {p.oldPrice && <del>${p.oldPrice}</del>}
@@ -552,9 +549,6 @@ const QuickView = ({ product, onClose, onAdd }) => {
           <p className="desc">{product.desc}</p>
           <div className="modal-feat">
             {product.feats.map((f, i) => <div key={i} className="ft">{f}</div>)}
-          </div>
-          <div className="color-dots" style={{ marginBottom: 18 }}>
-            {product.colors.map((c, i) => <div key={i} className="dot-color" style={{ background: c, width: 22, height: 22 }} />)}
           </div>
           <div className="modal-actions">
             <button className="btn btn-primary" onClick={() => { onAdd(product); onClose(); }}>
