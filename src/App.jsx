@@ -9,22 +9,33 @@ const CATEGORIES = [
   { id: 'tarjetas', label: 'Tarjetas' },
   { id: 'kits', label: 'Kits Creativos' },
   { id: 'vasos', label: 'Vasos' },
+  { id: 'sublimacion', label: 'Sublimación' },
 ];
 
 const PRODUCTS = [
-  { id: 1, name: 'Agenda Constelación 2026', cat: 'agendas', catLbl: 'Agenda', price: 28, oldPrice: 34, color: 'var(--coral)', mock: 'agenda', mockText: 'Cons-\ntelación', mockYr: '2026', badge: 'bestseller', desc: 'Agenda semanal en tapa dura con estampado de estrellas, cinta marcadora y pegatinas mensuales.', feats: ['Tapa dura tela', '160 páginas crema', 'Cinta de tela rosa', '+ stickers de regalo'], colors: ['#F08387', '#9DBDE4', '#C7D634'] },
-  { id: 2, name: 'Libreta Confetti A5', cat: 'libretas', catLbl: 'Libreta', price: 12, color: 'var(--yellow)', mock: 'agenda', mockText: 'Confetti\nA5', mockYr: 'punteado', badge: 'new', desc: 'Libreta A5 con interior punteado, ideal para bullet journal. Tapa con patrón Orenda.', feats: ['Formato A5', 'Hojas punteadas 90gsm', 'Encuadernación cosida'], colors: ['#F2E32A', '#E91E63', '#4D6BB1'] },
-  { id: 3, name: 'Pack Stickers Buenos Días', cat: 'stickers', catLbl: 'Stickers', price: 6, color: 'var(--pink)', image: '/assets/products/stickers.jpg', mock: 'sticker', mockText: '24 stickers', desc: 'Lámina con 24 stickers troquelados de frases positivas y dibujos para alegrar tu día.', feats: ['24 piezas troqueladas', 'Vinilo resistente al agua', 'Diseño exclusivo Orenda'], colors: ['#E91E63', '#F36A1F', '#9DBDE4'] },
-  { id: 4, name: 'Tarjeta "Te quiero un montón"', cat: 'tarjetas', catLbl: 'Tarjeta', price: 4, color: 'var(--lime)', mock: 'card', mockText: 'Te quiero un montón', desc: 'Tarjeta doblada con sobre artesanal. Frase ilustrada a mano. Perfecta para regalar.', feats: ['Tarjeta doblada 12×17 cm', 'Papel reciclado 350gsm', 'Sobre crema incluido'], colors: ['#C7D634', '#F08387', '#F2E32A'] },
-  { id: 5, name: 'Planner Semanal Crema', cat: 'agendas', catLbl: 'Planner', price: 14, color: 'var(--sky)', mock: 'planner', mockText: 'Semana', desc: 'Bloc planner sin fechas con 52 hojas tear-off. Organiza tu semana con espacio para hábitos y prioridades.', feats: ['Bloc 52 hojas', 'Sin fechar (úsalo cuando quieras)', 'Tamaño A4'], colors: ['#9DBDE4', '#FFF8E1', '#F08387'] },
-  { id: 6, name: 'Kit Lettering Principiante', cat: 'kits', catLbl: 'Kit creativo', price: 32, oldPrice: 38, color: 'var(--orange)', mock: 'agenda', mockText: 'Kit\nLettering', mockYr: 'workshop', badge: 'limited', desc: 'Todo lo que necesitas para empezar en el lettering: cuaderno guía, 4 rotuladores y plantillas.', feats: ['Cuaderno guía 64 pp.', '4 rotuladores Tombow', 'Plantillas de práctica'], colors: ['#F36A1F', '#E91E63', '#C7D634'] },
-  { id: 7, name: 'Libreta Mini Bolsillo', cat: 'libretas', catLbl: 'Libreta', price: 7, color: 'var(--indigo)', mock: 'agenda', mockText: 'Mini\npocket', mockYr: '40 hojas', desc: 'Libretita de bolsillo para apuntar ideas al vuelo. Pack de 3 colores surtidos.', feats: ['Pack de 3 unidades', 'Tamaño 9×14 cm', 'Hojas lisas color crema'], colors: ['#4D6BB1', '#F36A1F', '#C7D634'] },
-  { id: 8, name: 'Postales Ilustradas (set 8)', cat: 'tarjetas', catLbl: 'Postales', price: 9, color: 'var(--coral)', mock: 'card', mockText: 'Hola, hola', desc: 'Set de 8 postales ilustradas con frases en español. Cada una en un color diferente.', feats: ['8 postales 10×15 cm', 'Papel mate 300gsm', 'Para enviar o decorar'], colors: ['#F08387', '#F2E32A', '#9DBDE4'] },
-  { id: 9, name: 'Pack de Pines Orenda', cat: 'stickers', catLbl: 'Pines', price: 5, color: 'var(--lime)', image: '/assets/products/pines.jpg', mock: 'sticker', mockText: 'pines', badge: 'new', desc: 'Pines metálicos con ilustraciones Orenda. Para personalizar mochilas, chaquetas o tableros.', feats: ['Pack surtido', 'Cierre de mariposa', 'Diseño exclusivo Orenda'], colors: ['#C7D634', '#F2E32A', '#E91E63'] },
-  { id: 10, name: 'Bullet Journal Estrellas', cat: 'libretas', catLbl: 'Bullet Journal', price: 22, color: 'var(--pink)', mock: 'agenda', mockText: 'Bullet\nJournal', mockYr: 'estrellas', badge: 'bestseller', desc: 'Bullet journal premium con páginas punteadas, índice numerado y dos cintas marcadoras.', feats: ['208 páginas punteadas', 'Cubierta con estrellas', '2 cintas + bolsillo'], colors: ['#E91E63', '#4D6BB1', '#F36A1F'] },
-  { id: 11, name: 'Kit "Empieza el Año"', cat: 'kits', catLbl: 'Kit', price: 45, color: 'var(--yellow)', mock: 'planner', mockText: 'Año Nuevo', desc: 'Agenda + libreta + pack de stickers + tarjeta de propósitos. Todo en una caja de regalo.', feats: ['Caja-regalo Orenda', '4 productos seleccionados', 'Ahorra 12€ vs por separado'], colors: ['#F2E32A', '#E91E63', '#9DBDE4'] },
-  { id: 12, name: 'Tarjetas Cumpleaños (3)', cat: 'tarjetas', catLbl: 'Tarjetas', price: 8, color: 'var(--orange)', mock: 'card', mockText: 'Feliz cumple', desc: 'Pack de 3 tarjetas de cumpleaños diferentes con sobres a juego. Frases divertidas.', feats: ['3 diseños distintos', 'Sobres incluidos', 'Hechas en España'], colors: ['#F36A1F', '#F08387', '#C7D634'] },
-  { id: 13, name: 'Vaso de Cristal con Tapa de Bambú', cat: 'vasos', catLbl: 'Vaso', price: 18, color: 'var(--sky)', image: '/assets/products/vaso.jpg', mock: 'planner', mockText: 'Vaso', badge: 'bestseller', desc: 'Vaso de cristal con tapa de bambú natural. Incluye tarjeta de cuidados Orenda. Lavar la tapa a mano y evitar choques de temperatura.', feats: ['Cristal + bambú natural', 'Tarjeta de cuidados incluida', 'Lavar tapa a mano'], colors: ['#9DBDE4', '#F5F2EC', '#1B1B1B'] },
+  { id: 1, name: 'Agenda Constelación 2026', cat: 'agendas', catLbl: 'Agenda', price: 450, oldPrice: 580, color: 'var(--coral)', mock: 'agenda', mockText: 'Cons-\ntelación', mockYr: '2026', badge: 'bestseller', desc: 'Agenda semanal en tapa dura con estampado de estrellas, cinta marcadora y pegatinas mensuales.', feats: ['Tapa dura tela', '160 páginas crema', 'Cinta de tela rosa', '+ stickers de regalo'], colors: ['#F08387', '#9DBDE4', '#C7D634'] },
+  { id: 2, name: 'Libreta Confetti A5', cat: 'libretas', catLbl: 'Libreta', price: 180, color: 'var(--yellow)', mock: 'agenda', mockText: 'Confetti\nA5', mockYr: 'punteado', badge: 'new', desc: 'Libreta A5 con interior punteado, ideal para bullet journal. Tapa con patrón Orenda.', feats: ['Formato A5', 'Hojas punteadas 90gsm', 'Encuadernación cosida'], colors: ['#F2E32A', '#E91E63', '#4D6BB1'] },
+  { id: 3, name: 'Pack Stickers Buenos Días', cat: 'stickers', catLbl: 'Stickers', price: 89, color: 'var(--pink)', image: '/assets/products/stickers.jpg', mock: 'sticker', mockText: '24 stickers', desc: 'Lámina con 24 stickers troquelados de frases positivas y dibujos para alegrar tu día.', feats: ['24 piezas troqueladas', 'Vinilo resistente al agua', 'Diseño exclusivo Orenda'], colors: ['#E91E63', '#F36A1F', '#9DBDE4'] },
+  { id: 4, name: 'Tarjeta "Te quiero un montón"', cat: 'tarjetas', catLbl: 'Tarjeta', price: 45, color: 'var(--lime)', mock: 'card', mockText: 'Te quiero un montón', desc: 'Tarjeta doblada con sobre artesanal. Frase ilustrada a mano. Perfecta para regalar.', feats: ['Tarjeta doblada 12×17 cm', 'Papel reciclado 350gsm', 'Sobre crema incluido'], colors: ['#C7D634', '#F08387', '#F2E32A'] },
+  { id: 5, name: 'Planner Semanal Crema', cat: 'agendas', catLbl: 'Planner', price: 220, color: 'var(--sky)', mock: 'planner', mockText: 'Semana', desc: 'Bloc planner sin fechas con 52 hojas tear-off. Organiza tu semana con espacio para hábitos y prioridades.', feats: ['Bloc 52 hojas', 'Sin fechar (úsalo cuando quieras)', 'Tamaño A4'], colors: ['#9DBDE4', '#FFF8E1', '#F08387'] },
+  { id: 6, name: 'Kit Lettering Principiante', cat: 'kits', catLbl: 'Kit creativo', price: 520, oldPrice: 620, color: 'var(--orange)', mock: 'agenda', mockText: 'Kit\nLettering', mockYr: 'workshop', badge: 'limited', desc: 'Todo lo que necesitas para empezar en el lettering: cuaderno guía, 4 rotuladores y plantillas.', feats: ['Cuaderno guía 64 pp.', '4 rotuladores Tombow', 'Plantillas de práctica'], colors: ['#F36A1F', '#E91E63', '#C7D634'] },
+  { id: 7, name: 'Libreta Mini Bolsillo', cat: 'libretas', catLbl: 'Libreta', price: 110, color: 'var(--indigo)', mock: 'agenda', mockText: 'Mini\npocket', mockYr: '40 hojas', desc: 'Libretita de bolsillo para apuntar ideas al vuelo. Pack de 3 colores surtidos.', feats: ['Pack de 3 unidades', 'Tamaño 9×14 cm', 'Hojas lisas color crema'], colors: ['#4D6BB1', '#F36A1F', '#C7D634'] },
+  { id: 8, name: 'Postales Ilustradas (set 8)', cat: 'tarjetas', catLbl: 'Postales', price: 140, color: 'var(--coral)', mock: 'card', mockText: 'Hola, hola', desc: 'Set de 8 postales ilustradas con frases en español. Cada una en un color diferente.', feats: ['8 postales 10×15 cm', 'Papel mate 300gsm', 'Para enviar o decorar'], colors: ['#F08387', '#F2E32A', '#9DBDE4'] },
+  { id: 9, name: 'Pack de Pines Orenda', cat: 'stickers', catLbl: 'Pines', price: 79, color: 'var(--lime)', image: '/assets/products/pines.jpg', mock: 'sticker', mockText: 'pines', badge: 'new', desc: 'Pines metálicos con ilustraciones Orenda. Para personalizar mochilas, chaquetas o tableros.', feats: ['Pack surtido', 'Cierre de mariposa', 'Diseño exclusivo Orenda'], colors: ['#C7D634', '#F2E32A', '#E91E63'] },
+  { id: 10, name: 'Bullet Journal Estrellas', cat: 'libretas', catLbl: 'Bullet Journal', price: 350, color: 'var(--pink)', mock: 'agenda', mockText: 'Bullet\nJournal', mockYr: 'estrellas', badge: 'bestseller', desc: 'Bullet journal premium con páginas punteadas, índice numerado y dos cintas marcadoras.', feats: ['208 páginas punteadas', 'Cubierta con estrellas', '2 cintas + bolsillo'], colors: ['#E91E63', '#4D6BB1', '#F36A1F'] },
+  { id: 11, name: 'Kit "Empieza el Año"', cat: 'kits', catLbl: 'Kit', price: 720, color: 'var(--yellow)', mock: 'planner', mockText: 'Año Nuevo', desc: 'Agenda + libreta + pack de stickers + tarjeta de propósitos. Todo en una caja de regalo.', feats: ['Caja-regalo Orenda', '4 productos seleccionados', 'Ahorras $180 vs por separado'], colors: ['#F2E32A', '#E91E63', '#9DBDE4'] },
+  { id: 12, name: 'Tarjetas Cumpleaños (3)', cat: 'tarjetas', catLbl: 'Tarjetas', price: 120, color: 'var(--orange)', mock: 'card', mockText: 'Feliz cumple', desc: 'Pack de 3 tarjetas de cumpleaños diferentes con sobres a juego. Frases divertidas.', feats: ['3 diseños distintos', 'Sobres incluidos', 'Hechas en Sonora'], colors: ['#F36A1F', '#F08387', '#C7D634'] },
+  { id: 13, name: 'Vaso de Cristal con Tapa de Bambú', cat: 'vasos', catLbl: 'Vaso', price: 260, color: 'var(--sky)', image: '/assets/products/vaso.jpg', mock: 'planner', mockText: 'Vaso', badge: 'bestseller', desc: 'Vaso de cristal con tapa de bambú natural. Incluye tarjeta de cuidados Orenda. Lavar la tapa a mano y evitar choques de temperatura.', feats: ['Cristal + bambú natural', 'Tarjeta de cuidados incluida', 'Lavar tapa a mano'], colors: ['#9DBDE4', '#F5F2EC', '#1B1B1B'] },
+  { id: 14, name: 'Camiseta Sublimada', cat: 'sublimacion', catLbl: 'Camiseta', price: 189, color: 'var(--coral)', mock: 'merch', mockIcon: '👕', mockText: 'Camiseta', badge: 'new', desc: 'Camiseta de poliéster con diseño sublimado a todo color. Súbenos tu arte o pídenos un diseño exclusivo Orenda.', feats: ['Tela 100% poliéster', 'Estampado a todo color', 'Tallas S a XL'], colors: ['#F08387', '#9DBDE4', '#F2E32A'] },
+  { id: 15, name: 'Funda de Celular Sublimada', cat: 'sublimacion', catLbl: 'Funda', price: 159, color: 'var(--sky)', mock: 'merch', mockIcon: '📱', mockText: 'Funda', desc: 'Funda rígida para celular con tu foto o diseño sublimado. Disponible para los modelos más vendidos de iPhone y Samsung.', feats: ['Compatible iPhone & Samsung', 'Impresión edge-to-edge', 'Resistente a rayones'], colors: ['#9DBDE4', '#E91E63', '#C7D634'] },
+  { id: 16, name: 'Llavero Acrílico Sublimado', cat: 'sublimacion', catLbl: 'Llavero', price: 45, color: 'var(--yellow)', mock: 'merch', mockIcon: '🔑', mockText: 'Llavero', desc: 'Llavero de acrílico transparente con sublimación a dos caras. Perfecto para regalos personalizados de eventos.', feats: ['Acrílico 3 mm', 'Sublimación doble cara', 'Argolla y cadena metálica'], colors: ['#F2E32A', '#F08387', '#4D6BB1'] },
+  { id: 17, name: 'Lanyard Sublimado', cat: 'sublimacion', catLbl: 'Lanyard', price: 59, color: 'var(--indigo)', mock: 'merch', mockIcon: '🎫', mockText: 'Lanyard', desc: 'Lanyard de tela continua con diseño sublimado a lo largo. Ideal para eventos, conferencias y porta-gafetes.', feats: ['Tela 2 cm de ancho', 'Clip metálico', 'Estampado a todo color'], colors: ['#4D6BB1', '#F36A1F', '#FFF8E1'] },
+  { id: 18, name: 'Taza Cerámica Sublimada', cat: 'sublimacion', catLbl: 'Taza', price: 119, color: 'var(--orange)', mock: 'merch', mockIcon: '☕', mockText: 'Taza', badge: 'bestseller', desc: 'Taza blanca de cerámica 11 oz sublimada con tu diseño. Apta para microondas y lavavajillas.', feats: ['Cerámica 11 oz', 'Apta microondas', 'Caja regalo incluida'], colors: ['#F36A1F', '#FFFFFF', '#1B1B1B'] },
+  { id: 19, name: 'Gorra Sublimada', cat: 'sublimacion', catLbl: 'Gorra', price: 199, color: 'var(--lime)', mock: 'merch', mockIcon: '🧢', mockText: 'Gorra', desc: 'Gorra trucker con frente blanco sublimable y malla en la parte trasera. Ajuste regulable.', feats: ['Frente sublimable', 'Malla transpirable', 'Ajuste snapback'], colors: ['#C7D634', '#1B1B1B', '#F2E32A'] },
+  { id: 20, name: 'Mousepad Sublimado', cat: 'sublimacion', catLbl: 'Mousepad', price: 129, color: 'var(--pink)', mock: 'merch', mockIcon: '🖱️', mockText: 'Mousepad', desc: 'Mousepad rectangular con base antideslizante y superficie sublimada a todo color.', feats: ['22 × 18 cm', 'Base de goma', 'Bordes cosidos'], colors: ['#E91E63', '#9DBDE4', '#F2E32A'] },
+  { id: 21, name: 'Tote Bag Sublimada', cat: 'sublimacion', catLbl: 'Tote bag', price: 149, color: 'var(--coral)', mock: 'merch', mockIcon: '👜', mockText: 'Tote', desc: 'Bolsa tote de tela mixta sublimable, reforzada en las asas. Perfecta para uso diario o como regalo de evento.', feats: ['38 × 42 cm', 'Asas reforzadas', 'Estampado a todo color'], colors: ['#F08387', '#FFF8E1', '#4D6BB1'] },
+  { id: 22, name: 'Funda de Cojín Sublimada', cat: 'sublimacion', catLbl: 'Funda cojín', price: 229, color: 'var(--yellow)', mock: 'merch', mockIcon: '🛋️', mockText: 'Cojín', desc: 'Funda de cojín 40×40 cm sublimada por ambos lados. Ideal para regalo personalizado o decoración del hogar.', feats: ['40 × 40 cm', 'Cierre invisible', 'Funda sin relleno'], colors: ['#F2E32A', '#F08387', '#9DBDE4'] },
+  { id: 23, name: 'Botella de Aluminio Sublimada', cat: 'sublimacion', catLbl: 'Botella', price: 179, color: 'var(--sky)', mock: 'merch', mockIcon: '🥤', mockText: 'Botella', desc: 'Botella de aluminio de 600 ml con tapón de rosca, sublimada con tu diseño. Lavar a mano.', feats: ['Aluminio 600 ml', 'Tapón hermético', 'Lavar a mano'], colors: ['#9DBDE4', '#1B1B1B', '#F36A1F'] },
 ];
 
 const TESTIMONIALS = [
@@ -53,18 +64,29 @@ const Icon = ({ name, size = 20 }) => {
   }
 };
 
-/* ============== STAR LOGO ============== */
-const OrendaLogo = ({ color }) => (
-  <svg viewBox="0 0 100 100" style={{ display: 'block' }}>
-    <g fill={color || 'var(--indigo)'}>
-      <path d="M30,15 L34,30 L48,28 L36,38 L40,55 L28,44 L16,52 L22,38 L10,30 L24,30 Z" transform="translate(8,5) scale(.8)" />
-      <path d="M30,15 L34,30 L48,28 L36,38 L40,55 L28,44 L16,52 L22,38 L10,30 L24,30 Z" transform="translate(45,18) scale(.6)" />
-    </g>
-  </svg>
+/* ============== ORENDA LOGO ============== */
+const OrendaLogo = ({ className }) => (
+  <img
+    src="/assets/orenda-logo.png"
+    alt="Orenda Diseño Social"
+    className={'orenda-logo-img ' + (className || '')}
+    draggable="false"
+  />
 );
 
 /* ============== PRODUCT MOCK (visual placeholder) ============== */
-const ProductMock = ({ type, text, year }) => {
+const ProductMock = ({ type, text, year, icon }) => {
+  if (type === 'merch') {
+    return (
+      <div className="product-mock">
+        <div className="mock-merch">
+          <div className="merch-ic">{icon || '✦'}</div>
+          <div className="merch-lbl">{text || 'Sublimable'}</div>
+          <div className="merch-deco">sublimación · orenda</div>
+        </div>
+      </div>
+    );
+  }
   if (type === 'agenda') {
     const lines = (text || '').split('\n');
     return (
@@ -120,22 +142,30 @@ const ProductMock = ({ type, text, year }) => {
 };
 
 /* ============== NAV ============== */
-const Nav = ({ cartCount, onCartOpen, onNav }) => (
+const Nav = ({ cartCount, onCartOpen, onNav, currentUser, onAccountClick }) => (
   <nav className="nav">
     <div className="nav-inner">
-      <div className="nav-logo" onClick={() => onNav('top')}>
-        <OrendaLogo />
-        <span className="word">orenda<i style={{ fontWeight: 500, fontSize: 14, marginLeft: 6, color: 'var(--ink-soft)', fontFamily: 'Caveat' }}>diseño social</i></span>
+      <div className="nav-logo" onClick={() => onNav('top')} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
+        <OrendaLogo className="nav-logo-mark" />
       </div>
       <div className="nav-links">
         <a onClick={() => onNav('shop')}>Tienda</a>
+        <a onClick={() => onNav('sublimacion')}>Sublimación</a>
         <a onClick={() => onNav('collections')}>Colecciones</a>
         <a onClick={() => onNav('about')}>Sobre Orenda</a>
         <a onClick={() => onNav('newsletter')}>Newsletter</a>
       </div>
       <div className="nav-actions">
-        <button className="icon-btn" aria-label="Buscar"><Icon name="search" /></button>
-        <button className="icon-btn" aria-label="Cuenta"><Icon name="user" /></button>
+        <button
+          className={'icon-btn ' + (currentUser ? 'icon-btn-active' : '')}
+          aria-label={currentUser ? `Cuenta de ${currentUser.name}` : 'Cuenta'}
+          onClick={onAccountClick}
+          title={currentUser ? currentUser.name : 'Crear cuenta o iniciar sesión'}
+        >
+          {currentUser
+            ? <span className="user-initial">{currentUser.name.slice(0, 1).toUpperCase()}</span>
+            : <Icon name="user" />}
+        </button>
         <button className="icon-btn" aria-label="Carrito" onClick={onCartOpen}>
           <Icon name="cart" />
           <span className={'cart-badge ' + (cartCount > 0 ? 'show' : '')}>{cartCount}</span>
@@ -196,7 +226,7 @@ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView }) => (
       </button>
       {p.image
         ? <img src={p.image} alt={p.name} className="card-photo" loading="lazy" />
-        : <ProductMock type={p.mock} text={p.mockText} year={p.mockYr} />}
+        : <ProductMock type={p.mock} text={p.mockText} year={p.mockYr} icon={p.mockIcon} />}
     </div>
     <div className="card-body">
       <div className="card-cat">{p.catLbl}</div>
@@ -207,8 +237,8 @@ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView }) => (
       </div>
       <div className="card-foot">
         <div className="price">
-          {p.oldPrice && <del>{p.oldPrice}€</del>}
-          <small>desde</small>{p.price}€
+          {p.oldPrice && <del>${p.oldPrice}</del>}
+          <small>desde</small>${p.price}
         </div>
         <button className="add-btn" onClick={(e) => { e.stopPropagation(); onAdd(p); }} aria-label="Añadir al carrito">
           <Icon name="plus" size={16} />
@@ -254,7 +284,7 @@ const About = () => (
     <div className="about-band">
       <div>
         <h2>Detrás de Orenda hay<br />una idea: <em>diseñar bonito<br />también es cuidar</em>.</h2>
-        <p>Nacimos en 2021 en un taller de Valencia con dos cuadernos, una impresora cansada y muchas ganas. Hoy somos un estudio pequeño que diseña, imprime y envía cada pedido a mano.</p>
+        <p>Nacimos en Cruz de Piedra, Sonora, con dos cuadernos, una impresora cansada y muchas ganas. Hoy somos un estudio pequeño que diseña, imprime y envía cada pedido a mano.</p>
         <p>"Orenda" es una palabra de origen iroqués que se refiere a esa fuerza creativa que tenemos dentro. Eso es justo lo que queremos despertar con cada producto.</p>
       </div>
       <div className="about-pillars">
@@ -266,6 +296,49 @@ const About = () => (
     </div>
   </section>
 );
+
+/* ============== SUBLIMACIÓN ============== */
+const Sublimation = ({ onNav }) => {
+  const items = [
+    { ic: '👕', lbl: 'Camisetas' },
+    { ic: '📱', lbl: 'Fundas de celular' },
+    { ic: '🔑', lbl: 'Llaveros' },
+    { ic: '🎫', lbl: 'Lanyards' },
+    { ic: '☕', lbl: 'Tazas' },
+    { ic: '🧢', lbl: 'Gorras' },
+    { ic: '🖱️', lbl: 'Mousepads' },
+    { ic: '👜', lbl: 'Tote bags' },
+    { ic: '🛋️', lbl: 'Fundas de cojín' },
+    { ic: '🥤', lbl: 'Botellas' },
+  ];
+  return (
+    <section id="sublimacion">
+      <div className="sublim-band">
+        <div className="sublim-head">
+          <div className="eyebrow" style={{ background: 'var(--cream)', boxShadow: '3px 3px 0 var(--pink)' }}>
+            <span className="dot"></span>Nuevo servicio
+          </div>
+          <h2>Sublimación a <em>todo color</em>,<br />en cualquier superficie.</h2>
+          <p>Trasladamos tus diseños a textiles y accesorios con tintas que se funden con el material. Color vivo, tacto suave y un acabado que aguanta lavadas, sol y el uso diario. Ideal para eventos, regalos personalizados o tu propia marca.</p>
+          <div className="sublim-cta">
+            <button className="btn btn-primary" onClick={() => onNav('shop')}>
+              Ver productos sublimables <Icon name="arrow" size={16} />
+            </button>
+            <a className="btn btn-ghost" href="https://wa.me/?text=Hola%20Orenda%2C%20quiero%20cotizar%20una%20sublimaci%C3%B3n" target="_blank" rel="noopener noreferrer">Cotizar mi diseño</a>
+          </div>
+        </div>
+        <div className="sublim-grid">
+          {items.map((it, i) => (
+            <div key={i} className="sublim-item">
+              <div className="sublim-ic">{it.ic}</div>
+              <div className="sublim-lbl">{it.lbl}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+};
 
 /* ============== COLLECTIONS ============== */
 const Collections = ({ onNav }) => (
@@ -361,14 +434,11 @@ const Footer = () => (
   <footer>
     <div className="foot-grid">
       <div className="foot-brand">
-        <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-          <OrendaLogo />
-          <span style={{ fontFamily: 'Fraunces', fontWeight: 900, fontSize: 24, color: 'var(--indigo)' }}>orenda</span>
-        </div>
-        <p>Estudio de diseño social y papelería con alma. Hecho con calma desde Valencia.</p>
+        <OrendaLogo className="foot-logo-mark" />
+        <p>Estudio de diseño social y papelería con alma. Hecho con calma desde Cruz de Piedra, Sonora.</p>
         <div className="socials">
           <a href="https://instagram.com/orenda.social" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon name="ig" size={16} /></a>
-          <a href="#" aria-label="TikTok"><Icon name="tt" size={16} /></a>
+          <a href="https://www.tiktok.com/@orenda.social?lang=es-419" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Icon name="tt" size={16} /></a>
           <a href="#" aria-label="Pinterest"><Icon name="pin" size={16} /></a>
         </div>
       </div>
@@ -397,12 +467,15 @@ const CartDrawer = ({ open, onClose, cart, setCart }) => {
   const remove = (id) => setCart(cart.filter(c => c.id !== id));
   const updateQty = (id, delta) => setCart(cart.map(c => c.id === id ? { ...c, qty: Math.max(1, c.qty + delta) } : c));
   const subtotal = cart.reduce((s, c) => s + c.price * c.qty, 0);
-  const shipping = subtotal > 0 ? (subtotal > 35 ? 0 : 3.95) : 0;
+  const FREE_SHIPPING_THRESHOLD = 700;
+  const SHIPPING_COST = 80;
+  const shipping = subtotal > 0 ? (subtotal >= FREE_SHIPPING_THRESHOLD ? 0 : SHIPPING_COST) : 0;
+  const fmt = (n) => n.toLocaleString('es-MX');
 
   const checkout = () => {
-    const lines = cart.map(i => `• ${i.qty}× ${i.name} — ${(i.price * i.qty).toFixed(2)}€`).join('%0A');
-    const total = (subtotal + shipping).toFixed(2);
-    const msg = `¡Hola Orenda! Quiero hacer un pedido:%0A%0A${lines}%0A%0ATotal: ${total}€`;
+    const lines = cart.map(i => `• ${i.qty}× ${i.name} — $${fmt(i.price * i.qty)} MXN`).join('%0A');
+    const total = fmt(subtotal + shipping);
+    const msg = `¡Hola Orenda! Quiero hacer un pedido:%0A%0A${lines}%0A%0ATotal: $${total} MXN`;
     window.open(`https://wa.me/?text=${msg}`, '_blank');
   };
 
@@ -433,7 +506,7 @@ const CartDrawer = ({ open, onClose, cart, setCart }) => {
                 </div>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <div className="ip">{(item.price * item.qty).toFixed(2)}€</div>
+                <div className="ip">${fmt(item.price * item.qty)}</div>
                 <button className="rm" onClick={() => remove(item.id)}>Quitar</button>
               </div>
             </div>
@@ -442,14 +515,14 @@ const CartDrawer = ({ open, onClose, cart, setCart }) => {
         {cart.length > 0 && (
           <div className="drawer-foot">
             <div className="totals">
-              <div className="row"><span>Subtotal</span><span>{subtotal.toFixed(2)}€</span></div>
-              <div className="row"><span>Envío {subtotal > 35 && <em style={{ color: 'var(--pink)', fontStyle: 'normal' }}>· gratis</em>}</span><span>{shipping === 0 ? '0,00€' : shipping.toFixed(2) + '€'}</span></div>
-              <div className="row tot"><span>Total</span><span>{(subtotal + shipping).toFixed(2)}€</span></div>
+              <div className="row"><span>Subtotal</span><span>${fmt(subtotal)}</span></div>
+              <div className="row"><span>Envío {subtotal >= FREE_SHIPPING_THRESHOLD && <em style={{ color: 'var(--pink)', fontStyle: 'normal' }}>· gratis</em>}</span><span>{shipping === 0 ? '$0' : '$' + fmt(shipping)}</span></div>
+              <div className="row tot"><span>Total</span><span>${fmt(subtotal + shipping)} <small style={{ fontSize: 12, fontWeight: 700, color: 'var(--ink-soft)', letterSpacing: '.05em' }}>MXN</small></span></div>
             </div>
             <button className="btn btn-primary checkout-btn" onClick={checkout}>
               Ir al checkout <Icon name="arrow" size={16} />
             </button>
-            {subtotal < 35 && <p style={{ fontSize: 12, color: 'var(--ink-soft)', textAlign: 'center', marginTop: 10 }}>Te faltan <strong>{(35 - subtotal).toFixed(2)}€</strong> para envío gratis ✦</p>}
+            {subtotal < FREE_SHIPPING_THRESHOLD && <p style={{ fontSize: 12, color: 'var(--ink-soft)', textAlign: 'center', marginTop: 10 }}>Te faltan <strong>${fmt(FREE_SHIPPING_THRESHOLD - subtotal)}</strong> para envío gratis ✦</p>}
           </div>
         )}
       </aside>
@@ -463,18 +536,18 @@ const QuickView = ({ product, onClose, onAdd }) => {
   return (
     <div className={'modal-ov open'} onClick={onClose}>
       <div className="modal" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close modal-close-top" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
         <div className="modal-img" style={{ background: product.color }}>
           {product.image
             ? <img src={product.image} alt={product.name} className="modal-photo" />
-            : <ProductMock type={product.mock} text={product.mockText} year={product.mockYr} />}
+            : <ProductMock type={product.mock} text={product.mockText} year={product.mockYr} icon={product.mockIcon} />}
         </div>
         <div className="modal-info">
-          <button className="modal-close" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
           <div className="cat-tag">{product.catLbl}</div>
           <h2>{product.name}</h2>
           <div className="price-big">
-            {product.oldPrice && <del style={{ fontSize: 18, color: 'var(--ink-soft)', marginRight: 10, fontWeight: 600 }}>{product.oldPrice}€</del>}
-            {product.price}€
+            {product.oldPrice && <del style={{ fontSize: 18, color: 'var(--ink-soft)', marginRight: 10, fontWeight: 600 }}>${product.oldPrice}</del>}
+            ${product.price} <span style={{ fontSize: 14, color: 'var(--ink-soft)', fontWeight: 600, letterSpacing: '.05em' }}>MXN</span>
           </div>
           <p className="desc">{product.desc}</p>
           <div className="modal-feat">
@@ -490,6 +563,147 @@ const QuickView = ({ product, onClose, onAdd }) => {
             <button className="btn btn-ghost" onClick={onClose}>Seguir mirando</button>
           </div>
         </div>
+      </div>
+    </div>
+  );
+};
+
+/* ============== AUTH MODAL ============== */
+const AuthModal = ({ open, onClose, currentUser, onLogin, onSignup, onLogout }) => {
+  const [mode, setMode] = useState('signup');
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    if (open) {
+      setError('');
+      setLoading(false);
+      if (currentUser) setMode('account');
+      else setMode('signup');
+    }
+  }, [open, currentUser]);
+
+  if (!open) return null;
+
+  const reset = () => { setName(''); setEmail(''); setPassword(''); setError(''); };
+
+  const submit = (e) => {
+    e.preventDefault();
+    setError('');
+    const cleanEmail = email.trim().toLowerCase();
+    if (!cleanEmail || !cleanEmail.includes('@') || !cleanEmail.includes('.')) {
+      setError('Escribe un correo válido.');
+      return;
+    }
+    if (!password || password.length < 6) {
+      setError('La contraseña debe tener al menos 6 caracteres.');
+      return;
+    }
+    if (mode === 'signup') {
+      const cleanName = name.trim();
+      if (cleanName.length < 2) {
+        setError('Dinos cómo te llamas (mínimo 2 letras).');
+        return;
+      }
+      setLoading(true);
+      const result = onSignup({ name: cleanName, email: cleanEmail, password });
+      setLoading(false);
+      if (!result.ok) { setError(result.error); return; }
+      reset();
+    } else if (mode === 'login') {
+      setLoading(true);
+      const result = onLogin({ email: cleanEmail, password });
+      setLoading(false);
+      if (!result.ok) { setError(result.error); return; }
+      reset();
+    }
+  };
+
+  return (
+    <div className="modal-ov open" onClick={onClose}>
+      <div className="auth-modal" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={onClose} aria-label="Cerrar"><Icon name="close" size={16} /></button>
+
+        {mode === 'account' && currentUser ? (
+          <div className="auth-body">
+            <div className="auth-avatar">{currentUser.name.slice(0, 1).toUpperCase()}</div>
+            <h2>Hola, <em>{currentUser.name.split(' ')[0]}</em></h2>
+            <p className="auth-sub">{currentUser.email}</p>
+            <div className="auth-meta">
+              <div><strong>Miembro desde</strong><span>{new Date(currentUser.createdAt).toLocaleDateString('es-MX', { year: 'numeric', month: 'long', day: 'numeric' })}</span></div>
+            </div>
+            <button className="btn btn-primary" onClick={onClose}>Seguir comprando</button>
+            <button className="btn btn-ghost" onClick={() => { onLogout(); reset(); }}>Cerrar sesión</button>
+          </div>
+        ) : (
+          <div className="auth-body">
+            <div className="auth-tabs">
+              <button
+                type="button"
+                className={'auth-tab ' + (mode === 'signup' ? 'active' : '')}
+                onClick={() => { setMode('signup'); setError(''); }}
+              >Crear cuenta</button>
+              <button
+                type="button"
+                className={'auth-tab ' + (mode === 'login' ? 'active' : '')}
+                onClick={() => { setMode('login'); setError(''); }}
+              >Iniciar sesión</button>
+            </div>
+            <h2>{mode === 'signup' ? <>Únete al <em>club</em> Orenda</> : <>Bienvenida de <em>vuelta</em></>}</h2>
+            <p className="auth-sub">{mode === 'signup' ? 'Crea tu cuenta para guardar favoritos y agilizar tus pedidos.' : 'Inicia sesión para ver tu cuenta.'}</p>
+            <form className="auth-form" onSubmit={submit}>
+              {mode === 'signup' && (
+                <label>
+                  <span>Nombre</span>
+                  <input
+                    type="text"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Cómo te llamamos"
+                    autoComplete="name"
+                    required
+                  />
+                </label>
+              )}
+              <label>
+                <span>Correo</span>
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="tu@correo.com"
+                  autoComplete="email"
+                  required
+                />
+              </label>
+              <label>
+                <span>Contraseña</span>
+                <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Mínimo 6 caracteres"
+                  autoComplete={mode === 'signup' ? 'new-password' : 'current-password'}
+                  required
+                />
+              </label>
+              {error && <div className="auth-error">{error}</div>}
+              <button className="btn btn-primary" type="submit" disabled={loading}>
+                {loading ? 'Un momento…' : (mode === 'signup' ? 'Crear cuenta' : 'Entrar')}
+                <Icon name="arrow" size={16} />
+              </button>
+            </form>
+            <p className="auth-foot">
+              {mode === 'signup' ? '¿Ya tienes cuenta?' : '¿Nueva por aquí?'}{' '}
+              <a onClick={() => { setMode(mode === 'signup' ? 'login' : 'signup'); setError(''); }}>
+                {mode === 'signup' ? 'Inicia sesión' : 'Crea una cuenta'}
+              </a>
+            </p>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -518,27 +732,34 @@ export default function App() {
   const [liked, setLiked] = useState(() => loadPersisted('orenda:liked', []));
   const [quickView, setQuickView] = useState(null);
   const [toast, setToast] = useState({ msg: '', show: false });
+  const [currentUser, setCurrentUser] = useState(() => loadPersisted('orenda:currentUser', null));
+  const [authOpen, setAuthOpen] = useState(false);
   const toastTimer = useRef(null);
 
   useEffect(() => { localStorage.setItem('orenda:cart', JSON.stringify(cart)); }, [cart]);
   useEffect(() => { localStorage.setItem('orenda:liked', JSON.stringify(liked)); }, [liked]);
+  useEffect(() => {
+    if (currentUser) localStorage.setItem('orenda:currentUser', JSON.stringify(currentUser));
+    else localStorage.removeItem('orenda:currentUser');
+  }, [currentUser]);
 
   useEffect(() => {
     const onKey = (e) => {
       if (e.key === 'Escape') {
         if (quickView) setQuickView(null);
+        else if (authOpen) setAuthOpen(false);
         else if (drawerOpen) setDrawerOpen(false);
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [quickView, drawerOpen]);
+  }, [quickView, drawerOpen, authOpen]);
 
   useEffect(() => {
-    const lock = drawerOpen || !!quickView;
+    const lock = drawerOpen || !!quickView || authOpen;
     document.body.style.overflow = lock ? 'hidden' : '';
     return () => { document.body.style.overflow = ''; };
-  }, [drawerOpen, quickView]);
+  }, [drawerOpen, quickView, authOpen]);
 
   const showToast = useCallback((msg) => {
     if (toastTimer.current) clearTimeout(toastTimer.current);
@@ -559,6 +780,41 @@ export default function App() {
     setLiked(prev => prev.includes(id) ? prev.filter(i => i !== id) : [...prev, id]);
   }, []);
 
+  const handleSignup = useCallback(({ name, email, password }) => {
+    const users = loadPersisted('orenda:users', []);
+    if (users.some(u => u.email === email)) {
+      return { ok: false, error: 'Ya existe una cuenta con ese correo. Inicia sesión.' };
+    }
+    const user = { name, email, password, createdAt: new Date().toISOString() };
+    const next = [...users, user];
+    localStorage.setItem('orenda:users', JSON.stringify(next));
+    const { password: _pw, ...publicUser } = user;
+    setCurrentUser(publicUser);
+    setAuthOpen(false);
+    showToast(`¡Bienvenida, ${name.split(' ')[0]}!`);
+    return { ok: true };
+  }, [showToast]);
+
+  const handleLogin = useCallback(({ email, password }) => {
+    const users = loadPersisted('orenda:users', []);
+    const found = users.find(u => u.email === email && u.password === password);
+    if (!found) {
+      const exists = users.some(u => u.email === email);
+      return { ok: false, error: exists ? 'Contraseña incorrecta.' : 'No encontramos esa cuenta. Crea una.' };
+    }
+    const { password: _pw, ...publicUser } = found;
+    setCurrentUser(publicUser);
+    setAuthOpen(false);
+    showToast(`Hola otra vez, ${publicUser.name.split(' ')[0]}`);
+    return { ok: true };
+  }, [showToast]);
+
+  const handleLogout = useCallback(() => {
+    setCurrentUser(null);
+    setAuthOpen(false);
+    showToast('Sesión cerrada');
+  }, [showToast]);
+
   const handleNav = useCallback((id) => {
     if (id === 'top') { window.scrollTo({ top: 0, behavior: 'smooth' }); return; }
     const el = document.getElementById(id);
@@ -572,16 +828,31 @@ export default function App() {
 
   return (
     <>
-      <Nav cartCount={cartCount} onCartOpen={() => setDrawerOpen(true)} onNav={handleNav} />
+      <Nav
+        cartCount={cartCount}
+        onCartOpen={() => setDrawerOpen(true)}
+        onNav={handleNav}
+        currentUser={currentUser}
+        onAccountClick={() => setAuthOpen(true)}
+      />
       <Hero onNav={handleNav} />
       <Shop onAdd={handleAdd} liked={liked} onLike={handleLike} onQuickView={setQuickView} />
       <About />
+      <Sublimation onNav={handleNav} />
       <Collections onNav={handleNav} />
       <Testimonials />
       <Newsletter />
       <Footer />
       <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} cart={cart} setCart={setCart} />
       <QuickView product={quickView} onClose={() => setQuickView(null)} onAdd={handleAdd} />
+      <AuthModal
+        open={authOpen}
+        onClose={() => setAuthOpen(false)}
+        currentUser={currentUser}
+        onLogin={handleLogin}
+        onSignup={handleSignup}
+        onLogout={handleLogout}
+      />
       <Toast msg={toast.msg} show={toast.show} />
     </>
   );
