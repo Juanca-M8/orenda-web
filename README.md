@@ -63,8 +63,21 @@ Definidos como CSS variables en `src/index.css`:
 - **Neutros temables:** `--bg`, `--bg-2`, `--surface`, `--surface-2`, `--text`, `--text-soft`, `--border`, `--solid`, `--dark-block`. Cambian con `[data-theme="dark"]`.
 - **Tipografías:** Fraunces (titulares/precios), Quicksand (UI/body), Caveat (microcopy ornamental).
 
+## Novedades v3 (junio 2026)
+
+- **Hero con fotografía real** (Higgsfield/Nano Banana) con efecto Ken Burns y parallax al mover el mouse sobre el collage.
+- **Nueva banda "Showcase"** entre Sobre Orenda y Sublimación: foto de evento a pantalla completa con parallax de scroll.
+- **Fotos de producto reales** en Taza, Funda de Celular y Tote Bag sublimadas (CDN Higgsfield).
+- **Menú móvil** con hamburguesa (antes los enlaces desaparecían en pantallas ≤1024px sin alternativa).
+- **Botones flotantes**: cotizar por WhatsApp + volver arriba, aparecen al hacer scroll.
+- **Footer funcional**: los enlaces de Tienda filtran la categoría y navegan; Ayuda abre WhatsApp pre-llenado; se quitó el enlace muerto de Pinterest.
+- **SEO**: Open Graph, theme-color y JSON-LD de negocio local en `index.html`.
+- **Stats honestos**: el contador de productos ahora se calcula del catálogo real (decía 38, hay 23) y se quitó el "12k+ clientes".
+- Accesibilidad: navegación por teclado en logo y enlaces de nav, `aria-expanded` en el menú móvil.
+
 ## Pendiente
 
 - Conectar el formulario de newsletter a un servicio real (Mailchimp / Buttondown).
 - Si se quiere procesar pagos en la web (no solo cotizar por WhatsApp), añadir Stripe / Mercado Pago.
 - Configurar un dominio personalizado en Netlify cuando se compre.
+- Generar un hero video real con Higgsfield (requiere créditos) y descargar las imágenes del CDN a `/public/assets` para no depender de cloudfront.

@@ -31,13 +31,13 @@ const PRODUCTS = [
   { id: 12, name: 'Tarjetas Cumpleaños (3)', cat: 'tarjetas', catLbl: 'Tarjetas', price: 120, color: 'var(--orange)', mock: 'card', mockText: 'Feliz cumple', desc: 'Pack de 3 tarjetas de cumpleaños diferentes con sobres a juego. Frases divertidas.', feats: ['3 diseños distintos', 'Sobres incluidos', 'Hechas en Sonora'], colors: ['#F36A1F', '#F08387', '#C7D634'] },
   { id: 13, name: 'Vaso de Cristal con Tapa de Bambú', cat: 'vasos', catLbl: 'Vaso', price: 260, color: 'var(--sky)', image: '/assets/products/vaso.jpg', mock: 'planner', mockText: 'Vaso', badge: 'bestseller', desc: 'Vaso de cristal con tapa de bambú natural. Incluye tarjeta de cuidados Orenda. Lavar la tapa a mano y evitar choques de temperatura.', feats: ['Cristal + bambú natural', 'Tarjeta de cuidados incluida', 'Lavar tapa a mano'], colors: ['#9DBDE4', '#F5F2EC', '#1B1B1B'] },
   { id: 14, name: 'Camiseta Sublimada', cat: 'sublimacion', catLbl: 'Camiseta', price: 189, color: 'var(--coral)', mock: 'merch', mockIcon: '👕', mockText: 'Camiseta', badge: 'new', desc: 'Camiseta de poliéster con diseño sublimado a todo color. Súbenos tu arte o pídenos un diseño exclusivo Orenda.', feats: ['Tela 100% poliéster', 'Estampado a todo color', 'Tallas S a XL'], colors: ['#F08387', '#9DBDE4', '#F2E32A'] },
-  { id: 15, name: 'Funda de Celular Sublimada', cat: 'sublimacion', catLbl: 'Funda', price: 159, color: 'var(--sky)', mock: 'merch', mockIcon: '📱', mockText: 'Funda', desc: 'Funda rígida para celular con tu foto o diseño sublimado. Disponible para los modelos más vendidos de iPhone y Samsung.', feats: ['Compatible iPhone & Samsung', 'Impresión edge-to-edge', 'Resistente a rayones'], colors: ['#9DBDE4', '#E91E63', '#C7D634'] },
+  { id: 15, name: 'Funda de Celular Sublimada', cat: 'sublimacion', catLbl: 'Funda', price: 159, color: 'var(--sky)', image: 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213944_1582fff2-fa1d-4965-8c2e-2be4d11d1cff.png', mock: 'merch', mockIcon: '📱', mockText: 'Funda', desc: 'Funda rígida para celular con tu foto o diseño sublimado. Disponible para los modelos más vendidos de iPhone y Samsung.', feats: ['Compatible iPhone & Samsung', 'Impresión edge-to-edge', 'Resistente a rayones'], colors: ['#9DBDE4', '#E91E63', '#C7D634'] },
   { id: 16, name: 'Llavero Acrílico Sublimado', cat: 'sublimacion', catLbl: 'Llavero', price: 45, color: 'var(--yellow)', mock: 'merch', mockIcon: '🔑', mockText: 'Llavero', desc: 'Llavero de acrílico transparente con sublimación a dos caras. Perfecto para regalos personalizados de eventos.', feats: ['Acrílico 3 mm', 'Sublimación doble cara', 'Argolla y cadena metálica'], colors: ['#F2E32A', '#F08387', '#4D6BB1'] },
   { id: 17, name: 'Lanyard Sublimado', cat: 'sublimacion', catLbl: 'Lanyard', price: 59, color: 'var(--indigo)', mock: 'merch', mockIcon: '🎫', mockText: 'Lanyard', desc: 'Lanyard de tela continua con diseño sublimado a lo largo. Ideal para eventos, conferencias y porta-gafetes.', feats: ['Tela 2 cm de ancho', 'Clip metálico', 'Estampado a todo color'], colors: ['#4D6BB1', '#F36A1F', '#FFF8E1'] },
-  { id: 18, name: 'Taza Cerámica Sublimada', cat: 'sublimacion', catLbl: 'Taza', price: 119, color: 'var(--orange)', mock: 'merch', mockIcon: '☕', mockText: 'Taza', badge: 'bestseller', desc: 'Taza blanca de cerámica 11 oz sublimada con tu diseño. Apta para microondas y lavavajillas.', feats: ['Cerámica 11 oz', 'Apta microondas', 'Caja regalo incluida'], colors: ['#F36A1F', '#FFFFFF', '#1B1B1B'] },
+  { id: 18, name: 'Taza Cerámica Sublimada', cat: 'sublimacion', catLbl: 'Taza', price: 119, color: 'var(--orange)', image: 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213534_9e477529-7308-472b-b772-9c5169dbb547.png', mock: 'merch', mockIcon: '☕', mockText: 'Taza', badge: 'bestseller', desc: 'Taza blanca de cerámica 11 oz sublimada con tu diseño. Apta para microondas y lavavajillas.', feats: ['Cerámica 11 oz', 'Apta microondas', 'Caja regalo incluida'], colors: ['#F36A1F', '#FFFFFF', '#1B1B1B'] },
   { id: 19, name: 'Gorra Sublimada', cat: 'sublimacion', catLbl: 'Gorra', price: 199, color: 'var(--lime)', mock: 'merch', mockIcon: '🧢', mockText: 'Gorra', desc: 'Gorra trucker con frente blanco sublimable y malla en la parte trasera. Ajuste regulable.', feats: ['Frente sublimable', 'Malla transpirable', 'Ajuste snapback'], colors: ['#C7D634', '#1B1B1B', '#F2E32A'] },
   { id: 20, name: 'Mousepad Sublimado', cat: 'sublimacion', catLbl: 'Mousepad', price: 129, color: 'var(--pink)', mock: 'merch', mockIcon: '🖱️', mockText: 'Mousepad', desc: 'Mousepad rectangular con base antideslizante y superficie sublimada a todo color.', feats: ['22 × 18 cm', 'Base de goma', 'Bordes cosidos'], colors: ['#E91E63', '#9DBDE4', '#F2E32A'] },
-  { id: 21, name: 'Tote Bag Sublimada', cat: 'sublimacion', catLbl: 'Tote bag', price: 149, color: 'var(--coral)', mock: 'merch', mockIcon: '👜', mockText: 'Tote', desc: 'Bolsa tote de tela mixta sublimable, reforzada en las asas. Perfecta para uso diario o como regalo de evento.', feats: ['38 × 42 cm', 'Asas reforzadas', 'Estampado a todo color'], colors: ['#F08387', '#FFF8E1', '#4D6BB1'] },
+  { id: 21, name: 'Tote Bag Sublimada', cat: 'sublimacion', catLbl: 'Tote bag', price: 149, color: 'var(--coral)', image: 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213540_06c456f3-7c0c-4381-97b2-e104ef96ba15.png', mock: 'merch', mockIcon: '👜', mockText: 'Tote', desc: 'Bolsa tote de tela mixta sublimable, reforzada en las asas. Perfecta para uso diario o como regalo de evento.', feats: ['38 × 42 cm', 'Asas reforzadas', 'Estampado a todo color'], colors: ['#F08387', '#FFF8E1', '#4D6BB1'] },
   { id: 22, name: 'Funda de Cojín Sublimada', cat: 'sublimacion', catLbl: 'Funda cojín', price: 229, color: 'var(--yellow)', mock: 'merch', mockIcon: '🛋️', mockText: 'Cojín', desc: 'Funda de cojín 40×40 cm sublimada por ambos lados. Ideal para regalo personalizado o decoración del hogar.', feats: ['40 × 40 cm', 'Cierre invisible', 'Funda sin relleno'], colors: ['#F2E32A', '#F08387', '#9DBDE4'] },
   { id: 23, name: 'Botella de Aluminio Sublimada', cat: 'sublimacion', catLbl: 'Botella', price: 179, color: 'var(--sky)', mock: 'merch', mockIcon: '🥤', mockText: 'Botella', desc: 'Botella de aluminio de 600 ml con tapón de rosca, sublimada con tu diseño. Lavar a mano.', feats: ['Aluminio 600 ml', 'Tapón hermético', 'Lavar a mano'], colors: ['#9DBDE4', '#1B1B1B', '#F36A1F'] },
 ];
@@ -49,8 +49,8 @@ const TESTIMONIALS = [
 ];
 
 const STATS = [
-  { to: 12, suffix: 'k+', lbl: 'clientes felices' },
-  { to: 38, suffix: '', lbl: 'productos en catálogo' },
+  { to: PRODUCTS.length, suffix: '', lbl: 'productos en catálogo' },
+  { to: 10, suffix: '', lbl: 'superficies sublimables' },
   { to: 100, suffix: '%', lbl: 'diseño propio' },
 ];
 
@@ -69,6 +69,9 @@ const Icon = ({ name, size = 20 }) => {
     case 'ig': return <svg {...props}><rect x="2" y="2" width="20" height="20" rx="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>;
     case 'tt': return <svg {...props}><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" /></svg>;
     case 'pin': return <svg {...props}><circle cx="12" cy="12" r="10" /><path d="M8 12s1.5 5 4 5 4-3 4-5" /><circle cx="12" cy="9" r="1" /></svg>;
+    case 'menu': return <svg {...props}><line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" /></svg>;
+    case 'wa': return <svg {...props}><path d="M21 11.5a8.5 8.5 0 01-12.6 7.4L4 20l1.1-4.4A8.5 8.5 0 1121 11.5z" /><path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1-1.5-2-1-1 .5c-.8-.5-1.5-1.2-2-2l.5-1-1-2L9 9.5z" /></svg>;
+    case 'up': return <svg {...props}><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>;
     case 'moon': return <svg {...props}><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>;
     case 'sun': return <svg {...props}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>;
     default: return null;
@@ -224,9 +227,19 @@ const ScrollProgress = () => {
 };
 
 /* ============== NAV ============== */
+const NAV_LINKS = [
+  { id: 'shop', lbl: 'Tienda' },
+  { id: 'sublimacion', lbl: 'Sublimación' },
+  { id: 'collections', lbl: 'Colecciones' },
+  { id: 'about', lbl: 'Sobre Orenda' },
+  { id: 'newsletter', lbl: 'Newsletter' },
+];
+
 const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
   const badgeRef = useRef(null);
   const prev = useRef(cartCount);
+  const [menuOpen, setMenuOpen] = useState(false);
+  const go = (id) => { setMenuOpen(false); onNav(id); };
   useEffect(() => {
     if (cartCount > prev.current && badgeRef.current) {
       badgeRef.current.classList.remove('bump');
@@ -238,15 +251,11 @@ const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
   return (
     <nav className="nav">
       <div className="nav-inner">
-        <div className="nav-logo" onClick={() => onNav('top')} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
+        <div className="nav-logo" onClick={() => go('top')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go('top'); } }} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
           <OrendaLogo variant="nav-logo-mark" />
         </div>
         <div className="nav-links">
-          <a onClick={() => onNav('shop')}>Tienda</a>
-          <a onClick={() => onNav('sublimacion')}>Sublimación</a>
-          <a onClick={() => onNav('collections')}>Colecciones</a>
-          <a onClick={() => onNav('about')}>Sobre Orenda</a>
-          <a onClick={() => onNav('newsletter')}>Newsletter</a>
+          {NAV_LINKS.map(l => <a key={l.id} role="button" tabIndex={0} onClick={() => go(l.id)} onKeyDown={(e) => { if (e.key === 'Enter') go(l.id); }}>{l.lbl}</a>)}
         </div>
         <div className="nav-actions">
           <button className="icon-btn theme-toggle" aria-label="Cambiar tema" onClick={onToggleTheme}>
@@ -256,14 +265,40 @@ const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
             <Icon name="cart" />
             <span ref={badgeRef} className={'cart-badge ' + (cartCount > 0 ? 'show' : '')}>{cartCount}</span>
           </button>
+          <button className="icon-btn nav-burger" aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menuOpen} onClick={() => setMenuOpen(o => !o)}>
+            <Icon name={menuOpen ? 'close' : 'menu'} />
+          </button>
         </div>
+      </div>
+      <div className={'nav-mobile ' + (menuOpen ? 'open' : '')}>
+        {NAV_LINKS.map(l => <a key={l.id} role="button" tabIndex={menuOpen ? 0 : -1} onClick={() => go(l.id)}>{l.lbl}</a>)}
+        <a className="nav-mobile-wa" href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20un%20pedido')} target="_blank" rel="noopener noreferrer">Cotizar por WhatsApp</a>
       </div>
     </nav>
   );
 };
 
 /* ============== HERO ============== */
-const Hero = ({ onNav }) => (
+const HERO_PHOTO = 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213529_5e95a41c-7860-4e0e-871e-6e869d6ee271.png';
+const SHOWCASE_PHOTO = 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213939_4ca01a65-dbd8-4ca0-8599-1acc0c0c4f9a.png';
+
+const Hero = ({ onNav }) => {
+  const artRef = useRef(null);
+  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const onMove = (e) => {
+    if (reduce || !artRef.current) return;
+    const r = artRef.current.getBoundingClientRect();
+    const px = (e.clientX - r.left) / r.width - 0.5;
+    const py = (e.clientY - r.top) / r.height - 0.5;
+    artRef.current.style.setProperty('--mx', px.toFixed(3));
+    artRef.current.style.setProperty('--my', py.toFixed(3));
+  };
+  const onLeave = () => {
+    if (!artRef.current) return;
+    artRef.current.style.setProperty('--mx', 0);
+    artRef.current.style.setProperty('--my', 0);
+  };
+  return (
   <section className="hero" id="top" data-reveal>
     <div className="hero-pattern"></div>
     <div className="hero-content">
@@ -289,16 +324,20 @@ const Hero = ({ onNav }) => (
         ))}
       </div>
     </div>
-    <div className="hero-art">
+    <div className="hero-art" ref={artRef} onMouseMove={onMove} onMouseLeave={onLeave}>
       <div className="floating-shape fs-1">✦</div>
       <div className="floating-shape fs-2">♥</div>
-      <div className="ha-card ha-1"><ProductMock type="agenda" text={'Cons-\ntelación'} year="2026" /></div>
+      <div className="ha-card ha-1 ha-photo">
+        <img src={HERO_PHOTO} alt="Pedido real Orenda: piezas personalizadas y sublimadas" loading="eager" fetchpriority="high" />
+        <span className="ha-caption">pedido real ✦ orenda</span>
+      </div>
       <div className="ha-card ha-2"><ProductMock type="sticker" /></div>
       <div className="ha-card ha-3"><ProductMock type="planner" /></div>
       <div className="ha-card ha-4 ha-yellow"><ProductMock type="card" text="Te quiero" /></div>
     </div>
   </section>
-);
+  );
+};
 
 /* ============== PRODUCT CARD (with tilt) ============== */
 const ProductCard = ({ p, onAdd, onLike, liked, onQuickView, index }) => {
@@ -338,6 +377,11 @@ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView, index }) => {
 /* ============== SHOP ============== */
 const Shop = ({ onAdd, liked, onLike, onQuickView }) => {
   const [cat, setCat] = useState('todos');
+  useEffect(() => {
+    const onCat = (e) => { if (CATEGORIES.some(c => c.id === e.detail)) setCat(e.detail); };
+    window.addEventListener('orenda:cat', onCat);
+    return () => window.removeEventListener('orenda:cat', onCat);
+  }, []);
   const filtered = useMemo(() => cat === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat), [cat]);
   return (
     <section id="shop">
@@ -376,6 +420,43 @@ const About = () => (
     </div>
   </section>
 );
+
+/* ============== SHOWCASE (pedido real, parallax) ============== */
+const Showcase = () => {
+  const imgRef = useRef(null);
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        const el = imgRef.current;
+        if (el) {
+          const r = el.parentElement.getBoundingClientRect();
+          if (r.bottom > 0 && r.top < window.innerHeight) {
+            const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
+            el.style.transform = `translateY(${(p * -10).toFixed(2)}%)`;
+          }
+        }
+        ticking = false;
+      });
+    };
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <section className="showcase" aria-label="Pedido real de Orenda">
+      <img ref={imgRef} src={SHOWCASE_PHOTO} alt="Mesa de evento con piezas personalizadas Orenda" loading="lazy" />
+      <div className="showcase-scrim"></div>
+      <div className="showcase-txt" data-reveal>
+        <h2>Tu fiesta, <em>en cada detalle</em>.</h2>
+        <p>De la etiqueta al recuerdo: armamos la mesa completa de tu evento.</p>
+      </div>
+    </section>
+  );
+};
 
 /* ============== SUBLIMACIÓN ============== */
 const Sublimation = ({ onNav }) => {
@@ -446,7 +527,7 @@ const Testimonials = () => (
     <div className="testimonials" data-reveal>
       <div className="section-head" style={{ marginBottom: 32 }}>
         <div><h2>Lo que dicen<br />de <em>nosotros</em></h2></div>
-        <p>Más de 12.000 personas ya han metido un trocito de Orenda en su día a día.</p>
+        <p>Personas que ya traen un trocito de Orenda en su día a día.</p>
       </div>
       <div className="testi-grid">
         {TESTIMONIALS.map((t, i) => (
@@ -491,7 +572,7 @@ const Newsletter = () => {
 };
 
 /* ============== FOOTER ============== */
-const Footer = () => (
+const Footer = ({ onNav }) => (
   <footer data-reveal>
     <div className="foot-grid">
       <div className="foot-brand">
@@ -500,12 +581,25 @@ const Footer = () => (
         <div className="socials">
           <a href="https://instagram.com/orenda.social" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon name="ig" size={16} /></a>
           <a href="https://www.tiktok.com/@orenda.social?lang=es-419" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Icon name="tt" size={16} /></a>
-          <a href="#" aria-label="Pinterest"><Icon name="pin" size={16} /></a>
+          <a href={waLink('Hola%20Orenda%21')} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><Icon name="wa" size={16} /></a>
         </div>
       </div>
-      <div><h5>Tienda</h5><a>Agendas & Planners</a><a>Libretas</a><a>Stickers</a><a>Tarjetas</a><a>Sublimación</a></div>
-      <div><h5>Orenda</h5><a>Sobre nosotras</a><a>Sostenibilidad</a><a>Imprimibles gratis</a><a>Talleres</a><a>Prensa</a></div>
-      <div><h5>Ayuda</h5><a>Envíos y devoluciones</a><a>Contacto</a><a>FAQs</a><a>Tarjetas regalo</a></div>
+      <div><h5>Tienda</h5>
+        {[['agendas','Agendas & Planners'],['libretas','Libretas'],['stickers','Stickers'],['tarjetas','Tarjetas'],['sublimacion','Sublimación']].map(([id,lbl]) => (
+          <a key={id} role="button" tabIndex={0} onClick={() => { window.dispatchEvent(new CustomEvent('orenda:cat', { detail: id })); onNav('shop'); }}>{lbl}</a>
+        ))}
+      </div>
+      <div><h5>Orenda</h5>
+        <a role="button" tabIndex={0} onClick={() => onNav('about')}>Sobre nosotras</a>
+        <a role="button" tabIndex={0} onClick={() => onNav('collections')}>Colecciones</a>
+        <a role="button" tabIndex={0} onClick={() => onNav('newsletter')}>Newsletter</a>
+        <a href="https://instagram.com/orenda.social" target="_blank" rel="noopener noreferrer">Instagram</a>
+      </div>
+      <div><h5>Ayuda</h5>
+        <a href={waLink('Hola%20Orenda%2C%20tengo%20una%20duda%20sobre%20env%C3%ADos')} target="_blank" rel="noopener noreferrer">Envíos y entregas</a>
+        <a href={waLink('Hola%20Orenda%21')} target="_blank" rel="noopener noreferrer">Contacto</a>
+        <a href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20un%20pedido%20personalizado')} target="_blank" rel="noopener noreferrer">Cotizaciones</a>
+      </div>
     </div>
     <div className="foot-bottom">
       <span>© {new Date().getFullYear()} Orenda Diseño Social · Cruz de Piedra, Sonora · México</span>
@@ -615,6 +709,23 @@ const QuickView = ({ product, onClose, onAdd }) => {
   );
 };
 
+/* ============== FLOATING ACTIONS ============== */
+const FloatingActions = () => {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.8);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+  return (
+    <div className={'float-actions ' + (show ? 'show' : '')}>
+      <button className="float-btn float-top" aria-label="Volver arriba" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><Icon name="up" size={18} /></button>
+      <a className="float-btn float-wa" href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20un%20pedido')} target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp"><Icon name="wa" size={20} /><span>Cotiza</span></a>
+    </div>
+  );
+};
+
 /* ============== TOAST ============== */
 const Toast = ({ msg, show }) => (
   <div className={'toast ' + (show ? 'show' : '')}><span className="ic">✓</span> {msg}</div>
@@ -719,14 +830,16 @@ export default function App() {
       <Hero onNav={handleNav} />
       <Shop onAdd={handleAdd} liked={liked} onLike={handleLike} onQuickView={setQuickView} />
       <About />
+      <Showcase />
       <Sublimation onNav={handleNav} />
       <Collections onNav={handleNav} />
       <Testimonials />
       <Newsletter />
-      <Footer />
+      <Footer onNav={handleNav} />
       <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} cart={cart} setCart={setCart} />
       <QuickView product={quickView} onClose={() => setQuickView(null)} onAdd={handleAdd} />
       <Toast msg={toast.msg} show={toast.show} />
+      <FloatingActions />
     </>
   );
 }

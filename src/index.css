@@ -503,3 +503,86 @@ footer { padding: 60px 40px 30px; max-width: 1280px; margin: 40px auto 0; border
   [data-reveal] { opacity: 1 !important; transform: none !important; }
   .hero h1 .swirl::after { transform: skewX(-6deg) scaleX(1) !important; }
 }
+
+/* ============================================================
+   ORENDA — v3 upgrades (hero photo, showcase, mobile menu,
+   floating actions)
+   ============================================================ */
+
+/* ---------- HERO: mouse parallax + photo card ---------- */
+.hero-art { --mx: 0; --my: 0; }
+.hero-art .ha-card { will-change: transform; }
+.ha-1 { transform: rotate(-7deg) translate(calc(var(--mx) * 14px), calc(var(--my) * 14px)); }
+.ha-2 { transform: rotate(6deg) translate(calc(var(--mx) * -20px), calc(var(--my) * -20px)); }
+.ha-3 { transform: rotate(4deg) translate(calc(var(--mx) * 24px), calc(var(--my) * -16px)); }
+.ha-4 { transform: rotate(-9deg) translate(calc(var(--mx) * -16px), calc(var(--my) * 22px)); }
+.ha-photo { background: var(--surface); }
+.ha-photo img { width: 100%; height: 100%; object-fit: cover; display: block;
+  animation: kenburns 22s ease-in-out infinite alternate; transform-origin: 60% 40%; }
+@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.12) translate(-2%, -2%); } }
+.ha-photo .ha-caption { position: absolute; left: 12px; bottom: 12px; background: var(--paper);
+  color: var(--paper-ink); font-family: 'Caveat'; font-weight: 700; font-size: 16px;
+  padding: 4px 12px; border-radius: 999px; box-shadow: 0 6px 16px rgba(0,0,0,.22); }
+
+/* ---------- SHOWCASE (parallax band) ---------- */
+.showcase { position: relative; height: clamp(360px, 58vh, 540px); overflow: hidden;
+  display: grid; place-items: center; isolation: isolate; padding: 0 !important; }
+.showcase img { position: absolute; inset: -14% 0; width: 100%; height: 128%; object-fit: cover;
+  z-index: -2; will-change: transform; }
+.showcase-scrim { position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(to top, rgba(20,18,38,.62), rgba(20,18,38,.28)); }
+.showcase-txt { text-align: center; color: #FFF8E1; padding: 0 28px; }
+.showcase-txt h2 { font-family: 'Fraunces', serif; font-weight: 900;
+  font-size: clamp(34px, 5.5vw, 64px); line-height: 1; letter-spacing: -.03em; }
+.showcase-txt h2 em { font-style: italic; color: var(--yellow); }
+.showcase-txt p { margin-top: 14px; font-size: 17px; font-weight: 600; opacity: .92; }
+
+/* ---------- NAV: burger + mobile panel ---------- */
+.nav-burger { display: none; }
+.nav-mobile { display: none; }
+@media (max-width: 1024px) {
+  .nav-burger { display: grid; }
+  .nav-mobile { display: flex; flex-direction: column; gap: 4px; overflow: hidden;
+    max-height: 0; padding: 0 24px; transition: max-height .45s cubic-bezier(.2,.8,.2,1), padding .3s ease;
+    background: var(--nav-bg); backdrop-filter: blur(12px); }
+  .nav-mobile.open { max-height: 420px; padding: 10px 24px 18px; border-top: 1.5px solid var(--border); }
+  .nav-mobile a { padding: 12px 6px; font-weight: 700; font-size: 16px; color: var(--text);
+    text-decoration: none; cursor: pointer; border-bottom: 1px dashed var(--border); }
+  .nav-mobile a:last-of-type { border-bottom: none; }
+  .nav-mobile .nav-mobile-wa { margin-top: 8px; background: var(--solid); color: var(--bg);
+    border-radius: 999px; text-align: center; padding: 13px; border-bottom: none; }
+}
+
+/* ---------- CAT TABS: horizontal scroll on mobile ---------- */
+@media (max-width: 700px) {
+  .cat-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; padding-bottom: 8px; margin-right: -28px; padding-right: 28px; }
+  .cat-tabs::-webkit-scrollbar { display: none; }
+  .cat-tabs .cat-tab { flex: 0 0 auto; }
+}
+
+/* ---------- FLOATING ACTIONS ---------- */
+.float-actions { position: fixed; right: 18px; bottom: 18px; z-index: 90;
+  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
+  transform: translateY(140px); opacity: 0; pointer-events: none;
+  transition: transform .5s cubic-bezier(.2,.9,.3,1), opacity .4s ease; }
+.float-actions.show { transform: none; opacity: 1; pointer-events: auto; }
+.float-btn { display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;
+  border-radius: 999px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 14px;
+  box-shadow: 0 12px 28px var(--shadow-strong); transition: transform .2s ease, background .2s; text-decoration: none; }
+.float-btn:hover { transform: translateY(-3px); }
+.float-top { width: 42px; height: 42px; display: grid; place-items: center; background: var(--surface);
+  color: var(--text); border: 1.5px solid var(--border-2); }
+.float-wa { background: #25D366; color: #fff; padding: 13px 20px; }
+.float-wa:hover { background: #1ebe5b; }
+
+/* ---------- Polish: image cards keep zoom on hover ---------- */
+.card .card-photo { transition: transform .8s cubic-bezier(.2,.8,.2,1); }
+.card:hover .card-photo { transform: scale(1.06); }
+
+/* ---------- Reduced motion for new pieces ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .ha-photo img { animation: none !important; }
+  .showcase img { transform: none !important; }
+
+}
