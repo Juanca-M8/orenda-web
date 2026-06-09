@@ -1,0 +1,568 @@
+diff --git a/README.md b/README.md
+index b844660..6416830 100644
+--- a/README.md
++++ b/README.md
+@@ -63,8 +63,21 @@ Definidos como CSS variables en `src/index.css`:
+ - **Neutros temables:** `--bg`, `--bg-2`, `--surface`, `--surface-2`, `--text`, `--text-soft`, `--border`, `--solid`, `--dark-block`. Cambian con `[data-theme="dark"]`.
+ - **Tipografías:** Fraunces (titulares/precios), Quicksand (UI/body), Caveat (microcopy ornamental).
+ 
++## Novedades v3 (junio 2026)
++
++- **Hero con fotografía real** (Higgsfield/Nano Banana) con efecto Ken Burns y parallax al mover el mouse sobre el collage.
++- **Nueva banda "Showcase"** entre Sobre Orenda y Sublimación: foto de evento a pantalla completa con parallax de scroll.
++- **Fotos de producto reales** en Taza, Funda de Celular y Tote Bag sublimadas (CDN Higgsfield).
++- **Menú móvil** con hamburguesa (antes los enlaces desaparecían en pantallas ≤1024px sin alternativa).
++- **Botones flotantes**: cotizar por WhatsApp + volver arriba, aparecen al hacer scroll.
++- **Footer funcional**: los enlaces de Tienda filtran la categoría y navegan; Ayuda abre WhatsApp pre-llenado; se quitó el enlace muerto de Pinterest.
++- **SEO**: Open Graph, theme-color y JSON-LD de negocio local en `index.html`.
++- **Stats honestos**: el contador de productos ahora se calcula del catálogo real (decía 38, hay 23) y se quitó el "12k+ clientes".
++- Accesibilidad: navegación por teclado en logo y enlaces de nav, `aria-expanded` en el menú móvil.
++
+ ## Pendiente
+ 
+ - Conectar el formulario de newsletter a un servicio real (Mailchimp / Buttondown).
+ - Si se quiere procesar pagos en la web (no solo cotizar por WhatsApp), añadir Stripe / Mercado Pago.
+ - Configurar un dominio personalizado en Netlify cuando se compre.
++- Generar un hero video real con Higgsfield (requiere créditos) y descargar las imágenes del CDN a `/public/assets` para no depender de cloudfront.
+diff --git a/index.html b/index.html
+index f23d9fb..87c63cb 100644
+--- a/index.html
++++ b/index.html
+@@ -4,8 +4,18 @@
+     <meta charset="UTF-8" />
+     <link rel="icon" type="image/png" href="/assets/orenda-logo.png" />
+     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+-    <meta name="description" content="Orenda — papelería ilustrada con alma. Agendas, libretas, stickers y kits creativos hechos a mano." />
+-    <title>Orenda · Diseño Social</title>
++    <meta name="description" content="Orenda — papelería ilustrada con alma y sublimación a todo color. Agendas, libretas, stickers, tazas y más, hechos a mano en Sonora." />
++    <meta name="theme-color" content="#FFF8E1" />
++    <meta property="og:title" content="Orenda · Diseño Social" />
++    <meta property="og:description" content="Papelería ilustrada con alma y sublimación a todo color. Hecho a mano en Sonora." />
++    <meta property="og:type" content="website" />
++    <meta property="og:locale" content="es_MX" />
++    <meta property="og:url" content="https://orenda-web.netlify.app" />
++    <meta property="og:image" content="https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213939_4ca01a65-dbd8-4ca0-8599-1acc0c0c4f9a.png" />
++    <title>Orenda · Diseño Social — Papelería y sublimación hecha en Sonora</title>
++    <script type="application/ld+json">
++    {"@context":"https://schema.org","@type":"LocalBusiness","name":"Orenda Diseño Social","description":"Estudio de papelería ilustrada y sublimación.","address":{"@type":"PostalAddress","addressLocality":"Cruz de Piedra","addressRegion":"Sonora","addressCountry":"MX"},"telephone":"+52 622 151 3198","sameAs":["https://instagram.com/orenda.social","https://www.tiktok.com/@orenda.social"]}
++    </script>
+     <link rel="preconnect" href="https://fonts.googleapis.com" />
+     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+     <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;0,9..144,900;1,9..144,700&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+diff --git a/package-lock.json b/package-lock.json
+index e72a609..0e6651c 100644
+--- a/package-lock.json
++++ b/package-lock.json
+@@ -838,9 +838,6 @@
+         "arm"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -855,9 +852,6 @@
+         "arm"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -872,9 +866,6 @@
+         "arm64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -889,9 +880,6 @@
+         "arm64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -906,9 +894,6 @@
+         "loong64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -923,9 +908,6 @@
+         "loong64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -940,9 +922,6 @@
+         "ppc64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -957,9 +936,6 @@
+         "ppc64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -974,9 +950,6 @@
+         "riscv64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -991,9 +964,6 @@
+         "riscv64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -1008,9 +978,6 @@
+         "s390x"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -1025,9 +992,6 @@
+         "x64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "glibc"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+@@ -1042,9 +1006,6 @@
+         "x64"
+       ],
+       "dev": true,
+-      "libc": [
+-        "musl"
+-      ],
+       "license": "MIT",
+       "optional": true,
+       "os": [
+diff --git a/src/App.jsx b/src/App.jsx
+index b0ba0ae..276e3c2 100644
+--- a/src/App.jsx
++++ b/src/App.jsx
+@@ -31,13 +31,13 @@ const PRODUCTS = [
+   { id: 12, name: 'Tarjetas Cumpleaños (3)', cat: 'tarjetas', catLbl: 'Tarjetas', price: 120, color: 'var(--orange)', mock: 'card', mockText: 'Feliz cumple', desc: 'Pack de 3 tarjetas de cumpleaños diferentes con sobres a juego. Frases divertidas.', feats: ['3 diseños distintos', 'Sobres incluidos', 'Hechas en Sonora'], colors: ['#F36A1F', '#F08387', '#C7D634'] },
+   { id: 13, name: 'Vaso de Cristal con Tapa de Bambú', cat: 'vasos', catLbl: 'Vaso', price: 260, color: 'var(--sky)', image: '/assets/products/vaso.jpg', mock: 'planner', mockText: 'Vaso', badge: 'bestseller', desc: 'Vaso de cristal con tapa de bambú natural. Incluye tarjeta de cuidados Orenda. Lavar la tapa a mano y evitar choques de temperatura.', feats: ['Cristal + bambú natural', 'Tarjeta de cuidados incluida', 'Lavar tapa a mano'], colors: ['#9DBDE4', '#F5F2EC', '#1B1B1B'] },
+   { id: 14, name: 'Camiseta Sublimada', cat: 'sublimacion', catLbl: 'Camiseta', price: 189, color: 'var(--coral)', mock: 'merch', mockIcon: '👕', mockText: 'Camiseta', badge: 'new', desc: 'Camiseta de poliéster con diseño sublimado a todo color. Súbenos tu arte o pídenos un diseño exclusivo Orenda.', feats: ['Tela 100% poliéster', 'Estampado a todo color', 'Tallas S a XL'], colors: ['#F08387', '#9DBDE4', '#F2E32A'] },
+-  { id: 15, name: 'Funda de Celular Sublimada', cat: 'sublimacion', catLbl: 'Funda', price: 159, color: 'var(--sky)', mock: 'merch', mockIcon: '📱', mockText: 'Funda', desc: 'Funda rígida para celular con tu foto o diseño sublimado. Disponible para los modelos más vendidos de iPhone y Samsung.', feats: ['Compatible iPhone & Samsung', 'Impresión edge-to-edge', 'Resistente a rayones'], colors: ['#9DBDE4', '#E91E63', '#C7D634'] },
++  { id: 15, name: 'Funda de Celular Sublimada', cat: 'sublimacion', catLbl: 'Funda', price: 159, color: 'var(--sky)', image: 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213944_1582fff2-fa1d-4965-8c2e-2be4d11d1cff.png', mock: 'merch', mockIcon: '📱', mockText: 'Funda', desc: 'Funda rígida para celular con tu foto o diseño sublimado. Disponible para los modelos más vendidos de iPhone y Samsung.', feats: ['Compatible iPhone & Samsung', 'Impresión edge-to-edge', 'Resistente a rayones'], colors: ['#9DBDE4', '#E91E63', '#C7D634'] },
+   { id: 16, name: 'Llavero Acrílico Sublimado', cat: 'sublimacion', catLbl: 'Llavero', price: 45, color: 'var(--yellow)', mock: 'merch', mockIcon: '🔑', mockText: 'Llavero', desc: 'Llavero de acrílico transparente con sublimación a dos caras. Perfecto para regalos personalizados de eventos.', feats: ['Acrílico 3 mm', 'Sublimación doble cara', 'Argolla y cadena metálica'], colors: ['#F2E32A', '#F08387', '#4D6BB1'] },
+   { id: 17, name: 'Lanyard Sublimado', cat: 'sublimacion', catLbl: 'Lanyard', price: 59, color: 'var(--indigo)', mock: 'merch', mockIcon: '🎫', mockText: 'Lanyard', desc: 'Lanyard de tela continua con diseño sublimado a lo largo. Ideal para eventos, conferencias y porta-gafetes.', feats: ['Tela 2 cm de ancho', 'Clip metálico', 'Estampado a todo color'], colors: ['#4D6BB1', '#F36A1F', '#FFF8E1'] },
+-  { id: 18, name: 'Taza Cerámica Sublimada', cat: 'sublimacion', catLbl: 'Taza', price: 119, color: 'var(--orange)', mock: 'merch', mockIcon: '☕', mockText: 'Taza', badge: 'bestseller', desc: 'Taza blanca de cerámica 11 oz sublimada con tu diseño. Apta para microondas y lavavajillas.', feats: ['Cerámica 11 oz', 'Apta microondas', 'Caja regalo incluida'], colors: ['#F36A1F', '#FFFFFF', '#1B1B1B'] },
++  { id: 18, name: 'Taza Cerámica Sublimada', cat: 'sublimacion', catLbl: 'Taza', price: 119, color: 'var(--orange)', image: 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213534_9e477529-7308-472b-b772-9c5169dbb547.png', mock: 'merch', mockIcon: '☕', mockText: 'Taza', badge: 'bestseller', desc: 'Taza blanca de cerámica 11 oz sublimada con tu diseño. Apta para microondas y lavavajillas.', feats: ['Cerámica 11 oz', 'Apta microondas', 'Caja regalo incluida'], colors: ['#F36A1F', '#FFFFFF', '#1B1B1B'] },
+   { id: 19, name: 'Gorra Sublimada', cat: 'sublimacion', catLbl: 'Gorra', price: 199, color: 'var(--lime)', mock: 'merch', mockIcon: '🧢', mockText: 'Gorra', desc: 'Gorra trucker con frente blanco sublimable y malla en la parte trasera. Ajuste regulable.', feats: ['Frente sublimable', 'Malla transpirable', 'Ajuste snapback'], colors: ['#C7D634', '#1B1B1B', '#F2E32A'] },
+   { id: 20, name: 'Mousepad Sublimado', cat: 'sublimacion', catLbl: 'Mousepad', price: 129, color: 'var(--pink)', mock: 'merch', mockIcon: '🖱️', mockText: 'Mousepad', desc: 'Mousepad rectangular con base antideslizante y superficie sublimada a todo color.', feats: ['22 × 18 cm', 'Base de goma', 'Bordes cosidos'], colors: ['#E91E63', '#9DBDE4', '#F2E32A'] },
+-  { id: 21, name: 'Tote Bag Sublimada', cat: 'sublimacion', catLbl: 'Tote bag', price: 149, color: 'var(--coral)', mock: 'merch', mockIcon: '👜', mockText: 'Tote', desc: 'Bolsa tote de tela mixta sublimable, reforzada en las asas. Perfecta para uso diario o como regalo de evento.', feats: ['38 × 42 cm', 'Asas reforzadas', 'Estampado a todo color'], colors: ['#F08387', '#FFF8E1', '#4D6BB1'] },
++  { id: 21, name: 'Tote Bag Sublimada', cat: 'sublimacion', catLbl: 'Tote bag', price: 149, color: 'var(--coral)', image: 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213540_06c456f3-7c0c-4381-97b2-e104ef96ba15.png', mock: 'merch', mockIcon: '👜', mockText: 'Tote', desc: 'Bolsa tote de tela mixta sublimable, reforzada en las asas. Perfecta para uso diario o como regalo de evento.', feats: ['38 × 42 cm', 'Asas reforzadas', 'Estampado a todo color'], colors: ['#F08387', '#FFF8E1', '#4D6BB1'] },
+   { id: 22, name: 'Funda de Cojín Sublimada', cat: 'sublimacion', catLbl: 'Funda cojín', price: 229, color: 'var(--yellow)', mock: 'merch', mockIcon: '🛋️', mockText: 'Cojín', desc: 'Funda de cojín 40×40 cm sublimada por ambos lados. Ideal para regalo personalizado o decoración del hogar.', feats: ['40 × 40 cm', 'Cierre invisible', 'Funda sin relleno'], colors: ['#F2E32A', '#F08387', '#9DBDE4'] },
+   { id: 23, name: 'Botella de Aluminio Sublimada', cat: 'sublimacion', catLbl: 'Botella', price: 179, color: 'var(--sky)', mock: 'merch', mockIcon: '🥤', mockText: 'Botella', desc: 'Botella de aluminio de 600 ml con tapón de rosca, sublimada con tu diseño. Lavar a mano.', feats: ['Aluminio 600 ml', 'Tapón hermético', 'Lavar a mano'], colors: ['#9DBDE4', '#1B1B1B', '#F36A1F'] },
+ ];
+@@ -49,8 +49,8 @@ const TESTIMONIALS = [
+ ];
+ 
+ const STATS = [
+-  { to: 12, suffix: 'k+', lbl: 'clientes felices' },
+-  { to: 38, suffix: '', lbl: 'productos en catálogo' },
++  { to: PRODUCTS.length, suffix: '', lbl: 'productos en catálogo' },
++  { to: 10, suffix: '', lbl: 'superficies sublimables' },
+   { to: 100, suffix: '%', lbl: 'diseño propio' },
+ ];
+ 
+@@ -69,6 +69,9 @@ const Icon = ({ name, size = 20 }) => {
+     case 'ig': return <svg {...props}><rect x="2" y="2" width="20" height="20" rx="5" /><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" /><line x1="17.5" y1="6.5" x2="17.51" y2="6.5" /></svg>;
+     case 'tt': return <svg {...props}><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5" /></svg>;
+     case 'pin': return <svg {...props}><circle cx="12" cy="12" r="10" /><path d="M8 12s1.5 5 4 5 4-3 4-5" /><circle cx="12" cy="9" r="1" /></svg>;
++    case 'menu': return <svg {...props}><line x1="3" y1="7" x2="21" y2="7" /><line x1="3" y1="12" x2="21" y2="12" /><line x1="3" y1="17" x2="21" y2="17" /></svg>;
++    case 'wa': return <svg {...props}><path d="M21 11.5a8.5 8.5 0 01-12.6 7.4L4 20l1.1-4.4A8.5 8.5 0 1121 11.5z" /><path d="M9 9.5c.5 2.5 3 5 5.5 5.5l1-1.5-2-1-1 .5c-.8-.5-1.5-1.2-2-2l.5-1-1-2L9 9.5z" /></svg>;
++    case 'up': return <svg {...props}><line x1="12" y1="19" x2="12" y2="5" /><polyline points="5 12 12 5 19 12" /></svg>;
+     case 'moon': return <svg {...props}><path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" /></svg>;
+     case 'sun': return <svg {...props}><circle cx="12" cy="12" r="4" /><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41" /></svg>;
+     default: return null;
+@@ -224,9 +227,19 @@ const ScrollProgress = () => {
+ };
+ 
+ /* ============== NAV ============== */
++const NAV_LINKS = [
++  { id: 'shop', lbl: 'Tienda' },
++  { id: 'sublimacion', lbl: 'Sublimación' },
++  { id: 'collections', lbl: 'Colecciones' },
++  { id: 'about', lbl: 'Sobre Orenda' },
++  { id: 'newsletter', lbl: 'Newsletter' },
++];
++
+ const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
+   const badgeRef = useRef(null);
+   const prev = useRef(cartCount);
++  const [menuOpen, setMenuOpen] = useState(false);
++  const go = (id) => { setMenuOpen(false); onNav(id); };
+   useEffect(() => {
+     if (cartCount > prev.current && badgeRef.current) {
+       badgeRef.current.classList.remove('bump');
+@@ -238,15 +251,11 @@ const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
+   return (
+     <nav className="nav">
+       <div className="nav-inner">
+-        <div className="nav-logo" onClick={() => onNav('top')} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
++        <div className="nav-logo" onClick={() => go('top')} onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go('top'); } }} role="button" tabIndex={0} aria-label="Orenda — ir al inicio">
+           <OrendaLogo variant="nav-logo-mark" />
+         </div>
+         <div className="nav-links">
+-          <a onClick={() => onNav('shop')}>Tienda</a>
+-          <a onClick={() => onNav('sublimacion')}>Sublimación</a>
+-          <a onClick={() => onNav('collections')}>Colecciones</a>
+-          <a onClick={() => onNav('about')}>Sobre Orenda</a>
+-          <a onClick={() => onNav('newsletter')}>Newsletter</a>
++          {NAV_LINKS.map(l => <a key={l.id} role="button" tabIndex={0} onClick={() => go(l.id)} onKeyDown={(e) => { if (e.key === 'Enter') go(l.id); }}>{l.lbl}</a>)}
+         </div>
+         <div className="nav-actions">
+           <button className="icon-btn theme-toggle" aria-label="Cambiar tema" onClick={onToggleTheme}>
+@@ -256,14 +265,40 @@ const Nav = ({ cartCount, onCartOpen, onNav, theme, onToggleTheme }) => {
+             <Icon name="cart" />
+             <span ref={badgeRef} className={'cart-badge ' + (cartCount > 0 ? 'show' : '')}>{cartCount}</span>
+           </button>
++          <button className="icon-btn nav-burger" aria-label={menuOpen ? 'Cerrar menú' : 'Abrir menú'} aria-expanded={menuOpen} onClick={() => setMenuOpen(o => !o)}>
++            <Icon name={menuOpen ? 'close' : 'menu'} />
++          </button>
+         </div>
+       </div>
++      <div className={'nav-mobile ' + (menuOpen ? 'open' : '')}>
++        {NAV_LINKS.map(l => <a key={l.id} role="button" tabIndex={menuOpen ? 0 : -1} onClick={() => go(l.id)}>{l.lbl}</a>)}
++        <a className="nav-mobile-wa" href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20un%20pedido')} target="_blank" rel="noopener noreferrer">Cotizar por WhatsApp</a>
++      </div>
+     </nav>
+   );
+ };
+ 
+ /* ============== HERO ============== */
+-const Hero = ({ onNav }) => (
++const HERO_PHOTO = 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213529_5e95a41c-7860-4e0e-871e-6e869d6ee271.png';
++const SHOWCASE_PHOTO = 'https://d8j0ntlcm91z4.cloudfront.net/user_3EpCkQNnbt0hSkcH02Hgqeeay3o/hf_20260607_213939_4ca01a65-dbd8-4ca0-8599-1acc0c0c4f9a.png';
++
++const Hero = ({ onNav }) => {
++  const artRef = useRef(null);
++  const reduce = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
++  const onMove = (e) => {
++    if (reduce || !artRef.current) return;
++    const r = artRef.current.getBoundingClientRect();
++    const px = (e.clientX - r.left) / r.width - 0.5;
++    const py = (e.clientY - r.top) / r.height - 0.5;
++    artRef.current.style.setProperty('--mx', px.toFixed(3));
++    artRef.current.style.setProperty('--my', py.toFixed(3));
++  };
++  const onLeave = () => {
++    if (!artRef.current) return;
++    artRef.current.style.setProperty('--mx', 0);
++    artRef.current.style.setProperty('--my', 0);
++  };
++  return (
+   <section className="hero" id="top" data-reveal>
+     <div className="hero-pattern"></div>
+     <div className="hero-content">
+@@ -289,16 +324,20 @@ const Hero = ({ onNav }) => (
+         ))}
+       </div>
+     </div>
+-    <div className="hero-art">
++    <div className="hero-art" ref={artRef} onMouseMove={onMove} onMouseLeave={onLeave}>
+       <div className="floating-shape fs-1">✦</div>
+       <div className="floating-shape fs-2">♥</div>
+-      <div className="ha-card ha-1"><ProductMock type="agenda" text={'Cons-\ntelación'} year="2026" /></div>
++      <div className="ha-card ha-1 ha-photo">
++        <img src={HERO_PHOTO} alt="Pedido real Orenda: piezas personalizadas y sublimadas" loading="eager" fetchpriority="high" />
++        <span className="ha-caption">pedido real ✦ orenda</span>
++      </div>
+       <div className="ha-card ha-2"><ProductMock type="sticker" /></div>
+       <div className="ha-card ha-3"><ProductMock type="planner" /></div>
+       <div className="ha-card ha-4 ha-yellow"><ProductMock type="card" text="Te quiero" /></div>
+     </div>
+   </section>
+-);
++  );
++};
+ 
+ /* ============== PRODUCT CARD (with tilt) ============== */
+ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView, index }) => {
+@@ -338,6 +377,11 @@ const ProductCard = ({ p, onAdd, onLike, liked, onQuickView, index }) => {
+ /* ============== SHOP ============== */
+ const Shop = ({ onAdd, liked, onLike, onQuickView }) => {
+   const [cat, setCat] = useState('todos');
++  useEffect(() => {
++    const onCat = (e) => { if (CATEGORIES.some(c => c.id === e.detail)) setCat(e.detail); };
++    window.addEventListener('orenda:cat', onCat);
++    return () => window.removeEventListener('orenda:cat', onCat);
++  }, []);
+   const filtered = useMemo(() => cat === 'todos' ? PRODUCTS : PRODUCTS.filter(p => p.cat === cat), [cat]);
+   return (
+     <section id="shop">
+@@ -377,6 +421,43 @@ const About = () => (
+   </section>
+ );
+ 
++/* ============== SHOWCASE (pedido real, parallax) ============== */
++const Showcase = () => {
++  const imgRef = useRef(null);
++  useEffect(() => {
++    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
++    let ticking = false;
++    const onScroll = () => {
++      if (ticking) return;
++      ticking = true;
++      requestAnimationFrame(() => {
++        const el = imgRef.current;
++        if (el) {
++          const r = el.parentElement.getBoundingClientRect();
++          if (r.bottom > 0 && r.top < window.innerHeight) {
++            const p = (r.top + r.height / 2 - window.innerHeight / 2) / window.innerHeight;
++            el.style.transform = `translateY(${(p * -10).toFixed(2)}%)`;
++          }
++        }
++        ticking = false;
++      });
++    };
++    onScroll();
++    window.addEventListener('scroll', onScroll, { passive: true });
++    return () => window.removeEventListener('scroll', onScroll);
++  }, []);
++  return (
++    <section className="showcase" aria-label="Pedido real de Orenda">
++      <img ref={imgRef} src={SHOWCASE_PHOTO} alt="Mesa de evento con piezas personalizadas Orenda" loading="lazy" />
++      <div className="showcase-scrim"></div>
++      <div className="showcase-txt" data-reveal>
++        <h2>Tu fiesta, <em>en cada detalle</em>.</h2>
++        <p>De la etiqueta al recuerdo: armamos la mesa completa de tu evento.</p>
++      </div>
++    </section>
++  );
++};
++
+ /* ============== SUBLIMACIÓN ============== */
+ const Sublimation = ({ onNav }) => {
+   const items = [
+@@ -446,7 +527,7 @@ const Testimonials = () => (
+     <div className="testimonials" data-reveal>
+       <div className="section-head" style={{ marginBottom: 32 }}>
+         <div><h2>Lo que dicen<br />de <em>nosotros</em></h2></div>
+-        <p>Más de 12.000 personas ya han metido un trocito de Orenda en su día a día.</p>
++        <p>Personas que ya traen un trocito de Orenda en su día a día.</p>
+       </div>
+       <div className="testi-grid">
+         {TESTIMONIALS.map((t, i) => (
+@@ -491,7 +572,7 @@ const Newsletter = () => {
+ };
+ 
+ /* ============== FOOTER ============== */
+-const Footer = () => (
++const Footer = ({ onNav }) => (
+   <footer data-reveal>
+     <div className="foot-grid">
+       <div className="foot-brand">
+@@ -500,12 +581,25 @@ const Footer = () => (
+         <div className="socials">
+           <a href="https://instagram.com/orenda.social" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><Icon name="ig" size={16} /></a>
+           <a href="https://www.tiktok.com/@orenda.social?lang=es-419" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><Icon name="tt" size={16} /></a>
+-          <a href="#" aria-label="Pinterest"><Icon name="pin" size={16} /></a>
++          <a href={waLink('Hola%20Orenda%21')} target="_blank" rel="noopener noreferrer" aria-label="WhatsApp"><Icon name="wa" size={16} /></a>
+         </div>
+       </div>
+-      <div><h5>Tienda</h5><a>Agendas & Planners</a><a>Libretas</a><a>Stickers</a><a>Tarjetas</a><a>Sublimación</a></div>
+-      <div><h5>Orenda</h5><a>Sobre nosotras</a><a>Sostenibilidad</a><a>Imprimibles gratis</a><a>Talleres</a><a>Prensa</a></div>
+-      <div><h5>Ayuda</h5><a>Envíos y devoluciones</a><a>Contacto</a><a>FAQs</a><a>Tarjetas regalo</a></div>
++      <div><h5>Tienda</h5>
++        {[['agendas','Agendas & Planners'],['libretas','Libretas'],['stickers','Stickers'],['tarjetas','Tarjetas'],['sublimacion','Sublimación']].map(([id,lbl]) => (
++          <a key={id} role="button" tabIndex={0} onClick={() => { window.dispatchEvent(new CustomEvent('orenda:cat', { detail: id })); onNav('shop'); }}>{lbl}</a>
++        ))}
++      </div>
++      <div><h5>Orenda</h5>
++        <a role="button" tabIndex={0} onClick={() => onNav('about')}>Sobre nosotras</a>
++        <a role="button" tabIndex={0} onClick={() => onNav('collections')}>Colecciones</a>
++        <a role="button" tabIndex={0} onClick={() => onNav('newsletter')}>Newsletter</a>
++        <a href="https://instagram.com/orenda.social" target="_blank" rel="noopener noreferrer">Instagram</a>
++      </div>
++      <div><h5>Ayuda</h5>
++        <a href={waLink('Hola%20Orenda%2C%20tengo%20una%20duda%20sobre%20env%C3%ADos')} target="_blank" rel="noopener noreferrer">Envíos y entregas</a>
++        <a href={waLink('Hola%20Orenda%21')} target="_blank" rel="noopener noreferrer">Contacto</a>
++        <a href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20un%20pedido%20personalizado')} target="_blank" rel="noopener noreferrer">Cotizaciones</a>
++      </div>
+     </div>
+     <div className="foot-bottom">
+       <span>© {new Date().getFullYear()} Orenda Diseño Social · Cruz de Piedra, Sonora · México</span>
+@@ -615,6 +709,23 @@ const QuickView = ({ product, onClose, onAdd }) => {
+   );
+ };
+ 
++/* ============== FLOATING ACTIONS ============== */
++const FloatingActions = () => {
++  const [show, setShow] = useState(false);
++  useEffect(() => {
++    const onScroll = () => setShow(window.scrollY > window.innerHeight * 0.8);
++    onScroll();
++    window.addEventListener('scroll', onScroll, { passive: true });
++    return () => window.removeEventListener('scroll', onScroll);
++  }, []);
++  return (
++    <div className={'float-actions ' + (show ? 'show' : '')}>
++      <button className="float-btn float-top" aria-label="Volver arriba" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}><Icon name="up" size={18} /></button>
++      <a className="float-btn float-wa" href={waLink('Hola%20Orenda%2C%20quiero%20cotizar%20un%20pedido')} target="_blank" rel="noopener noreferrer" aria-label="Cotizar por WhatsApp"><Icon name="wa" size={20} /><span>Cotiza</span></a>
++    </div>
++  );
++};
++
+ /* ============== TOAST ============== */
+ const Toast = ({ msg, show }) => (
+   <div className={'toast ' + (show ? 'show' : '')}><span className="ic">✓</span> {msg}</div>
+@@ -719,14 +830,16 @@ export default function App() {
+       <Hero onNav={handleNav} />
+       <Shop onAdd={handleAdd} liked={liked} onLike={handleLike} onQuickView={setQuickView} />
+       <About />
++      <Showcase />
+       <Sublimation onNav={handleNav} />
+       <Collections onNav={handleNav} />
+       <Testimonials />
+       <Newsletter />
+-      <Footer />
++      <Footer onNav={handleNav} />
+       <CartDrawer open={drawerOpen} onClose={() => setDrawerOpen(false)} cart={cart} setCart={setCart} />
+       <QuickView product={quickView} onClose={() => setQuickView(null)} onAdd={handleAdd} />
+       <Toast msg={toast.msg} show={toast.show} />
++      <FloatingActions />
+     </>
+   );
+ }
+diff --git a/src/index.css b/src/index.css
+index 06e26de..f03f179 100644
+--- a/src/index.css
++++ b/src/index.css
+@@ -503,3 +503,86 @@ footer { padding: 60px 40px 30px; max-width: 1280px; margin: 40px auto 0; border
+   [data-reveal] { opacity: 1 !important; transform: none !important; }
+   .hero h1 .swirl::after { transform: skewX(-6deg) scaleX(1) !important; }
+ }
++
++/* ============================================================
++   ORENDA — v3 upgrades (hero photo, showcase, mobile menu,
++   floating actions)
++   ============================================================ */
++
++/* ---------- HERO: mouse parallax + photo card ---------- */
++.hero-art { --mx: 0; --my: 0; }
++.hero-art .ha-card { will-change: transform; }
++.ha-1 { transform: rotate(-7deg) translate(calc(var(--mx) * 14px), calc(var(--my) * 14px)); }
++.ha-2 { transform: rotate(6deg) translate(calc(var(--mx) * -20px), calc(var(--my) * -20px)); }
++.ha-3 { transform: rotate(4deg) translate(calc(var(--mx) * 24px), calc(var(--my) * -16px)); }
++.ha-4 { transform: rotate(-9deg) translate(calc(var(--mx) * -16px), calc(var(--my) * 22px)); }
++.ha-photo { background: var(--surface); }
++.ha-photo img { width: 100%; height: 100%; object-fit: cover; display: block;
++  animation: kenburns 22s ease-in-out infinite alternate; transform-origin: 60% 40%; }
++@keyframes kenburns { from { transform: scale(1); } to { transform: scale(1.12) translate(-2%, -2%); } }
++.ha-photo .ha-caption { position: absolute; left: 12px; bottom: 12px; background: var(--paper);
++  color: var(--paper-ink); font-family: 'Caveat'; font-weight: 700; font-size: 16px;
++  padding: 4px 12px; border-radius: 999px; box-shadow: 0 6px 16px rgba(0,0,0,.22); }
++
++/* ---------- SHOWCASE (parallax band) ---------- */
++.showcase { position: relative; height: clamp(360px, 58vh, 540px); overflow: hidden;
++  display: grid; place-items: center; isolation: isolate; padding: 0 !important; }
++.showcase img { position: absolute; inset: -14% 0; width: 100%; height: 128%; object-fit: cover;
++  z-index: -2; will-change: transform; }
++.showcase-scrim { position: absolute; inset: 0; z-index: -1;
++  background: linear-gradient(to top, rgba(20,18,38,.62), rgba(20,18,38,.28)); }
++.showcase-txt { text-align: center; color: #FFF8E1; padding: 0 28px; }
++.showcase-txt h2 { font-family: 'Fraunces', serif; font-weight: 900;
++  font-size: clamp(34px, 5.5vw, 64px); line-height: 1; letter-spacing: -.03em; }
++.showcase-txt h2 em { font-style: italic; color: var(--yellow); }
++.showcase-txt p { margin-top: 14px; font-size: 17px; font-weight: 600; opacity: .92; }
++
++/* ---------- NAV: burger + mobile panel ---------- */
++.nav-burger { display: none; }
++.nav-mobile { display: none; }
++@media (max-width: 1024px) {
++  .nav-burger { display: grid; }
++  .nav-mobile { display: flex; flex-direction: column; gap: 4px; overflow: hidden;
++    max-height: 0; padding: 0 24px; transition: max-height .45s cubic-bezier(.2,.8,.2,1), padding .3s ease;
++    background: var(--nav-bg); backdrop-filter: blur(12px); }
++  .nav-mobile.open { max-height: 420px; padding: 10px 24px 18px; border-top: 1.5px solid var(--border); }
++  .nav-mobile a { padding: 12px 6px; font-weight: 700; font-size: 16px; color: var(--text);
++    text-decoration: none; cursor: pointer; border-bottom: 1px dashed var(--border); }
++  .nav-mobile a:last-of-type { border-bottom: none; }
++  .nav-mobile .nav-mobile-wa { margin-top: 8px; background: var(--solid); color: var(--bg);
++    border-radius: 999px; text-align: center; padding: 13px; border-bottom: none; }
++}
++
++/* ---------- CAT TABS: horizontal scroll on mobile ---------- */
++@media (max-width: 700px) {
++  .cat-tabs { display: flex; flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch;
++    scrollbar-width: none; padding-bottom: 8px; margin-right: -28px; padding-right: 28px; }
++  .cat-tabs::-webkit-scrollbar { display: none; }
++  .cat-tabs .cat-tab { flex: 0 0 auto; }
++}
++
++/* ---------- FLOATING ACTIONS ---------- */
++.float-actions { position: fixed; right: 18px; bottom: 18px; z-index: 90;
++  display: flex; flex-direction: column; align-items: flex-end; gap: 10px;
++  transform: translateY(140px); opacity: 0; pointer-events: none;
++  transition: transform .5s cubic-bezier(.2,.9,.3,1), opacity .4s ease; }
++.float-actions.show { transform: none; opacity: 1; pointer-events: auto; }
++.float-btn { display: inline-flex; align-items: center; gap: 8px; border: none; cursor: pointer;
++  border-radius: 999px; font-family: 'Quicksand', sans-serif; font-weight: 700; font-size: 14px;
++  box-shadow: 0 12px 28px var(--shadow-strong); transition: transform .2s ease, background .2s; text-decoration: none; }
++.float-btn:hover { transform: translateY(-3px); }
++.float-top { width: 42px; height: 42px; display: grid; place-items: center; background: var(--surface);
++  color: var(--text); border: 1.5px solid var(--border-2); }
++.float-wa { background: #25D366; color: #fff; padding: 13px 20px; }
++.float-wa:hover { background: #1ebe5b; }
++
++/* ---------- Polish: image cards keep zoom on hover ---------- */
++.card .card-photo { transition: transform .8s cubic-bezier(.2,.8,.2,1); }
++.card:hover .card-photo { transform: scale(1.06); }
++
++/* ---------- Reduced motion for new pieces ---------- */
++@media (prefers-reduced-motion: reduce) {
++  .ha-photo img { animation: none !important; }
++  .showcase img { transform: none !important; }
++
++}
